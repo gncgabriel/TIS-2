@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <title>Cadastro</title>
+</head>
+<style>
+    body{
+        background-color: rgb(243, 243, 243);
+    }
+    .aside{
+      
+        background-color: white;
+        min-height: 300px;
+    }
+    .main{
+        background-color: rgb(243, 243, 243);
+        min-height: 300px;
+    }
+    #h-solicite{
+        font-size: 27pt;
+    }
+    .radius{
+        border-radius: 100px !important; 
+    }
+    .card{
+        border: none !important;
+        border-radius: 15px;
+        height: 150px;
+    }
+</style>
+
+<body class="container col-12">
+    <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top col-12">
+            <a class="navbar-brand" href="#">
+                <img src="https://uploaddeimagens.com.br/images/001/648/956/full/Logo_fundo_transparente.png?1538505137"
+                    width="130px" class="d-inline-block align-top" alt="stud@nt">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Meu Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="fazerLogoff()"  href="#">Sair</a>
+                    </li> 
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="row text-center" style="padding-top:59px !important;">
+        <aside class="col-md-12 aside">
+            <br>
+            <p id="h-solicite"></p>
+            <small>Aqui você pode solicitar ou dar aulas sobre qualquer tema</small><br>
+            <button class="btn btn-primary radius" style="margin-top:40px">Meu Perfil</button>
+        </aside>
+        <main class="col-md-12 main">
+            <div class="col-12" style="margin-top:10px;">
+                <p> </p>
+            </div>
+            <br>
+            <br>
+            <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
+                <a href="novaAula.html" style="text-decoration:none">
+                    <div class="card-body">
+                        <h5 class="card-title">Solicitar Aula</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"></h6><br>
+                        <p class="card-text">Solicite uma aula, presencial ou á distância !</p>
+                    </div>
+                </a>
+            </div>
+            <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
+                <a href="aulasR.html" style="text-decoration:none">
+                    <div class="card-body">
+                        <h5 class="card-title">Aulas Criadas</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"></h6><br>
+                        <p class="card-text">Veja todas suas aulas solicitadas</p>
+                    </div>
+                </a>
+            </div>
+            <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
+                <a href="javascript:void()" style="text-decoration:none">
+                    <div class="card-body">
+                        <h5 class="card-title">Dar Aula</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"></h6><br>
+                        <p class="card-text">Veja aulas solicitadas pelos alunos e escolha uma </p>
+                    </div>
+                </a>
+            </div>
+            <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
+                <a href="javascript:void()" style="text-decoration:none">
+                    <div class="card-body">
+                        <h5 class="card-title">Aulas Dadas</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"></h6><br>
+                        <p class="card-text">Veja e gerencie todas suas aulas dadas</p>
+                    </div>
+                </a>
+            </div>
+
+        </main>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script>
+
+
+    </script>
+    <script >
+
+        function fazerLogoff() {
+            localStorage.clear();
+            window.open("studantLogin.html", "_self");
+        }
+
+        $("#h-solicite").text("Olá "+ localStorage.getItem("Nome")+", Bem vindo a Stud@nt")
+        $("#innerEmail").text(localStorage.getItem("Estado"))
+    
+    </script>
+</body>
+
+</html>

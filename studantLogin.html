@@ -2,7 +2,7 @@
 <html lang="pt">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UFT-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>stud@nt | Login</title>
@@ -72,27 +72,106 @@ form img {
     <div class="container">
         <div class="row">
             <div class="card col-10 col-lg-4 col-sm-7">
-                <form method="post" action="#" role="login">
+                <form id="formLogin" action="">
                     <img src="https://uploaddeimagens.com.br/images/001/648/956/full/Logo_fundo_transparente.png?1538505137"
                         width="160px" class="img-responsive" alt="stud@nt" title="stud@nt" />
-                    <br><br><input type="email" name="email" placeholder="E-mail" required class="form-control input-lg" /><br>
-                    <input type="password" class="form-control input-lg" id="password" placeholder="Senha" required="" />
-                    <br><button type="submit" name="go" class="btn btn-lg btn-color btn-block" title="Fazer Login">Entrar</button>
-                    <div>
-                        <a href="#">Ainda não sou cadastrado</a>
+                    <br><br><input type="email" name="email" placeholder="E-mail" id="email" required class="form-control input-lg" /><br>
+                    <input type="password" name="senha" class="form-control input-lg" id="password" placeholder="Senha"
+                        required="" />
+                    <br><a><button name="go" type="button" onclick="GetIt('http://127.0.0.1:7800')" class="btn btn-lg btn-color btn-block"
+                            title="Fazer Login">Entrar</button>
+                        <div>
+                            <a href="cadastroPerfil.html">Ainda não sou cadastrado</a>
+                        </div>
                 </form>
+                <div id="logado" class="d-none">
+                    <p>Você está logado</p>
+                </div>
             </div>
         </div>
-    </div>
-    <footer>
-        <p>Todos os direitos reservados ® 2018</p>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+        <footer>
+            <p>Todos os direitos reservados ® 2018</p>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+        <script >
+            function FactoryXMLHttpRequest() {
+
+                if (window.XMLHttpRequest) {
+                    return new XMLHttpRequest();// Opera 8.0+, Firefox, Chrome, Safari
+                }
+                else if (window.XDomainRequest) {
+                    return new XDomainRequest(); // Antigo Safari
+                }
+                else if (window.ActiveXObject) {
+                    var msxmls = new Array(// Internet Explorer
+                        'Msxml2.XMLHTTP',
+                        'Microsoft.XMLHTTP',
+                        'Msxml3.XMLHTTP',
+                        'Msxml2.XMLHTTP.7.0',
+                        'Msxml2.XMLHTTP.6.0',
+                        'Msxml2.XMLHTTP.5.0',
+                        'Msxml2.XMLHTTP.4.0',
+                        'Msxml2.XMLHTTP.3.0');
+                    for (var i = 0; i < msxmls.length; i++) {
+                        try {
+                            return new ActiveXObject(msxmls[i]);
+                        } catch (e) {
+                        }
+                    }
+                } else throw new Error("Could not instantiate XMLHttpRequest");
+            }
+
+
+            function GetIt(url) {
+
+                var xmlhttp = FactoryXMLHttpRequest();
+
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        // Javascript function JSON.parse to parse JSON data
+                        try {
+                            var jsonObj = JSON.parse(xmlhttp.responseText);
+                            console.log("Login Success");
+                            $("#formLogin").addClass("d-none");
+                            $("#logado").removeClass("d-none");
+                            localStorage.setItem("ID", jsonObj.ID);
+                            localStorage.setItem("Nome",  jsonObj.Nome);
+                            localStorage.setItem("Sobrenome", jsonObj.Sobrenome);
+                            localStorage.setItem("Email",email);
+                            localStorage.setItem("Idade", jsonObj.Idade);
+                            localStorage.setItem("Telefone", jsonObj.Telefone);
+                            localStorage.setItem("Cidade", jsonObj.Cidade);
+                            localStorage.setItem("Estado", jsonObj.Estado);
+                            localStorage.setItem("Bairro", jsonObj.Bairro);
+                            localStorage.setItem("EMonitor", jsonObj.EMonitor);
+                            localStorage.setItem("Status",1);
+
+                            setTimeout(function(){
+                                window.open("pagInicial.html","_self");
+                            },300)
+
+                        } catch (erro) {
+                            console.log(erro + "\t USUARIO OU SENHA INVÁLIDO");
+                        }
+                    }
+                }
+                var email = $("#email").val()
+                var senha = $("#password").val()
+                params = jQuery.param({
+                    email: email, senha: senha
+                })
+                params = decodeURIComponent(params)
+                if (xmlhttp) {
+                    xmlhttp.open('post', url + "/login?" + params, true);
+                    xmlhttp.send();
+                }
+            }
+        </script>
 </body>
 
 </html>

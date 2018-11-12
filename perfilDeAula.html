@@ -8,30 +8,50 @@
     <title>Cadastro</title>
 </head>
 
-<body class="container col-12" style="background-color: white">
+<body class="container col-12" style="background-color: white" onload="GetIt('http://127.0.0.1:7800')">
     <div class="row">
-        <nav class="navbar navbar-dark bg-dark col-12 fixed-top" style="z-index:9999">
-            <a class="navbar-brand" href="#">
-                <img src="https://uploaddeimagens.com.br/images/001/648/956/full/Logo_fundo_transparente.png?1538505137"
-                    width="130px" class="d-inline-block align-top" alt="stud@nt">
-            </a>
-        </nav>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top col-12">
+                    <a class="navbar-brand" href="#">
+                        <img src="https://uploaddeimagens.com.br/images/001/648/956/full/Logo_fundo_transparente.png?1538505137"
+                            width="130px" class="d-inline-block align-top" alt="stud@nt">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="pagInicial.html">Inicio <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="perfil.html">Meu Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" onclick="fazerLogoff()"  href="#">Sair</a>
+                            </li> 
+        
+                        </ul>
+                    </div>
+                </nav>
     </div>
     <div class="row text-center" style="padding:120px 5px 0px 5px;">
         <main class="col-sm-12 col-md-5" style="padding:10px 0px 0px 0px; margin: 0 auto; height: 500px; background-color: aquamarine">
-            <h3>Curso Matematica</h3>
+            <h3 id="title">Curso Matematica</h3>
             <div style="float:left; padding: 0 20px 0 20px; margin-top: 30px; width: 200px;">
-                <p>Monitor : César do Filme</p>
-                <p style="margin-top:100px;">Av. Afonso Pena 2182 - Edificio Casa Branca</p>
+                <p id="monitor">Monitor : César do Filme</p>
+                <p id="local" style="margin-top:100px;">Av. Afonso Pena 2182 - Edificio Casa Branca</p>
             </div>
             <div style="float:right; padding: 0 20px 0 0;margin-top: 30px;">
-                <p>Horário Inicio : 13:00</p>
-                <p style="margin-top:100px;">Duração : 1 hora</p>
+                <p id="horario">Horário Inicio : 13:00</p>
+                <p id="duracao" style="margin-top:100px;">Duração : 1 hora</p>
             </div>
-            <input class="form col-10" placeholder="Código de inicialização da aula" style="margin-top:50px; margin-bottom: 20px">
-            <label>Só poderá ser cancelada com 1 hora de antecedencia</label><br>
-            <button class="btn btn-primary col-md-3" style="margin-top:5px;">Iniciar</button>
-            <button class="btn btn-danger col-md-3" style="margin-top:5px;">Cancelar aula</button>
+            <div id="areaCodigo" style="margin-top:300px">
+
+            </div>
+            <label>Só poderá ser cancelada com até 1 hora de antecedencia</label><br>
+            <button onclick="cancela('http://127.0.0.1:7800')" class="btn btn-danger col-md-3" style="margin-top:5px;">Cancelar
+                aula</button>
         </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -41,5 +61,119 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 </body>
+<script>
+    var id = window.location.search.split('id=')[1];
+    function fazerLogoff() {
+        localStorage.clear();
+        window.open("studantLogin.html", "_self");
+    }
+
+    function FactoryXMLHttpRequest() {
+
+        if (window.XMLHttpRequest) {
+            return new XMLHttpRequest();// Opera 8.0+, Firefox, Chrome, Safari
+        }
+        else if (window.XDomainRequest) {
+            return new XDomainRequest(); // Antigo Safari
+        }
+        else if (window.ActiveXObject) {
+            var msxmls = new Array(// Internet Explorer
+                'Msxml2.XMLHTTP',
+                'Microsoft.XMLHTTP',
+                'Msxml3.XMLHTTP',
+                'Msxml2.XMLHTTP.7.0',
+                'Msxml2.XMLHTTP.6.0',
+                'Msxml2.XMLHTTP.5.0',
+                'Msxml2.XMLHTTP.4.0',
+                'Msxml2.XMLHTTP.3.0');
+            for (var i = 0; i < msxmls.length; i++) {
+                try {
+                    return new ActiveXObject(msxmls[i]);
+                } catch (e) {
+                }
+            }
+        } else throw new Error("Could not instantiate XMLHttpRequest");
+    }
+
+
+    function GetIt(url) {
+
+        var xmlhttp = FactoryXMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                // Javascript function JSON.parse to parse JSON data
+                try {
+
+                    var jsonObj = JSON.parse(xmlhttp.responseText);
+                    $('#title').text(jsonObj.Descricao)
+                    if (jsonObj.Monitor == null) {
+                        $('#monitor').text('Aguardando Monitor')
+                    } else {
+                        $('#monitor').text(jsonObj.Monitor);
+                    }
+                    $('#horario').text(jsonObj.Hora_inicio)
+                    $('#duracao').text('Duração : ' + jsonObj.Duracao + ' Hora')
+                    $('#local').text(jsonObj.Local)
+                    if (localStorage.getItem("Nome") == jsonObj.Aluno) {
+                        $('#areaCodigo').html('<h6>Informe o código abaixo ao monitor para dar inicio a aula</h6><h4 class="text-danger">' + jsonObj.Codigo + '</h4>')
+                    }
+
+                } catch (erro) {
+                    console.log(erro + "\t Não foi possível ver essa aula");
+                }
+            }
+        }
+
+
+        params = jQuery.param({
+            ID: id
+        });
+
+        params = decodeURIComponent(params)
+
+        if (xmlhttp) {
+            xmlhttp.open('post', url + "/verAula?" + params, true);
+            xmlhttp.send();
+        }
+    }
+    function cancela(url) {
+        
+
+            var xmlhttp = FactoryXMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    // Javascript function JSON.parse to parse JSON data
+                    try {
+
+                        var jsonObj = JSON.parse(xmlhttp.responseText);
+                        if(jsonObj != null){
+                            alert("Aula Cancelada");
+                            setTimeout(function(){
+                                window.open("aulasR.html","_self");
+                            },300)
+                        }
+
+                    } catch (erro) {
+                        console.log(erro + "\t Não foi possível cancelar essa aula");
+                    }
+                }
+            }
+
+
+            params = jQuery.param({
+                IdAula: id
+            });
+
+            params = decodeURIComponent(params)
+
+            if (xmlhttp) {
+                xmlhttp.open('post', url + "/cancelarAula?" + params, true);
+                xmlhttp.send();
+            }
+        
+    }
+</script>
 
 </html>
