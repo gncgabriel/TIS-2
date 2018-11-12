@@ -19,12 +19,13 @@ public class Aula implements Serializable{
 	private String horaInicio;
 	private String horaFim;
 	private String codigo;
+	private String descricao;
 	// Status 0 = aguardando monitor, Status 1 = monitor aceitou aula
 	// Status 2 = aula cancelada, Status 3 = aula iniciada, Status 4 = aula
 	// finalizada
 	private int status =0;
 
-	public Aula(int id, String alunoDaAula, String local, int canal, String data, int duracao, double valor,
+	public Aula(int id, String alunoDaAula, String local, int canal, String data, String descricao, int duracao, double valor,
 			Curso curso, String horaInicio) {
 		this.alunoDaAula = alunoDaAula;
 		this.local = local;
@@ -41,6 +42,7 @@ public class Aula implements Serializable{
 		this.curso = curso;
 		this.horaInicio = horaInicio;
 		this.id = id;
+		this.setDescricao(descricao);
 		this.codigo = RandomString.generate(10);
 	}
 
@@ -146,7 +148,7 @@ public class Aula implements Serializable{
 	@Override
 	public String toString() {
 		return "Id :"+id+" Monitor da aula: "+monitorDaAula+" Aluno da aula: "+alunoDaAula
-				+" Local da aula: "+local+" Canal: "+canal+" Data: "+data+"  Duração: "+duracao
+				+" Local da aula: "+local+" Canal: "+canal+" Data: "+data+"Descrição: "+descricao+ "Duração: "+duracao
 				+" valor: "+valor+" Horario Inicio: "+horaInicio+" Horario Fim :"+horaFim
 				+" Código da aula: "+codigo+" Status: "+status; 
 	}
@@ -158,12 +160,21 @@ public class Aula implements Serializable{
 		obj.put("Local", local);
 		obj.put("Canal", canal);
 		obj.put("Data", data);
-		obj.put("Duraçao", duracao);
+		obj.put("Descricao", descricao);
+		obj.put("Duracao", duracao);
 		obj.put("Hora_Inicio", horaInicio);
 		obj.put("Valor",valor);
 		obj.put("Codigo", codigo);
 		obj.put("Status", status);
 		return obj;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 }

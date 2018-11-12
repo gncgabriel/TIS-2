@@ -18,7 +18,11 @@ public class StudantService {
 				"senha", true);
 		studant.addUsuario("Caio", "Ribeiro", "caio@gmail.com", 18, "3178459632", "Minas Gerais", "Belo Horizonte",
 				"Centro", "senha", true);
-		studant.addCurso(studant.getUsuario("caio@gmail.com").getId(), "Matematica", "Geometria Analitica", "Tudo sobre geometria analitica");
+		studant.addCurso(studant.getUsuario("caio@gmail.com").getId(), "Matematica");
+		studant.addCurso(studant.getUsuario("jorge@gmail.com").getId(), "Programacao");
+
+		studant.addAula(studant.getUsuario("kah@gmail.com").getId(), "Pampulha, rua portugal, 571",1,"10/02/2019","Aula de Geometria analitica",1,"Matematica","12:00");
+
 		a.gravarEmArquivo(studant, endereco);
 	}
 
@@ -78,15 +82,16 @@ public class StudantService {
 	
 	public String criarAulas(Request request) {
 		Query query = request.getQuery();
-		int id = Integer.parseInt(query.get("Id"));
+		int id = Integer.parseInt((String)query.get("ID"));
 		String local = (String)query.get("Endereco");
 		int canal= Integer.parseInt((String)query.get("Canal"));
 		String data = (String)query.get("Data");
+		String descricao = (String)query.get("Descricao");
 		int duracao = Integer.parseInt((String)query.get("Duracao"));
-		String curso = (String)query.get("TituloCurso");
+		String curso = (String)query.get("Curso");
 		String horaInicio = (String)query.get("HInicio");
 		
-		String retorno = studant.addAula(id, local, canal, data, duracao, curso, horaInicio);
+		String retorno = studant.addAula(id, local, canal, data, descricao, duracao, curso, horaInicio);
 		a.gravarEmArquivo(studant, StudantService.endereco);
 		return retorno;
 	}
@@ -125,7 +130,12 @@ public class StudantService {
 		return retorno;
 	}
 	
-	
+	public String getAula(Request request) {
+		Query query = request.getQuery();
+		int idAula = Integer.parseInt((String)query.get("ID"));
+		
+		return studant.getAula(idAula);
+	}
 	
 	public String getMyAulasRecebidas(Request request) {
 		Query query = request.getQuery();
@@ -144,7 +154,7 @@ public class StudantService {
 	}
 	
 
-	public String getCursos(Request request) {
+	public String getCursos() {
 		return studant.verCursos();
 	}
 

@@ -159,14 +159,14 @@ public class Usuario implements JsonFormatter, Serializable{
 		this.nota = (this.nota + nota) / qtdeAulaRecebidas;
 	}
 
-	public Aula receberAula(int id, String local, int canal, String data, int duracao, Curso curso, String horaInicio) {
+	public Aula receberAula(int id, String local, int canal, String data, String descricao ,int duracao, Curso curso, String horaInicio) {
 		int valor = 0;
 		if (canal == 1) {
 			valor = 100 * duracao;
 		} else {
 			valor = 80 * duracao;
 		}
-		Aula aula = new Aula(id, this.nome, local, canal, data, duracao, valor, curso, horaInicio);
+		Aula aula = new Aula(id, this.nome, local, canal, data,descricao ,duracao,valor, curso, horaInicio);
 		aulasRecebidas.add(aula);
 		qtdeAulaRecebidas++;
 		return aula;
@@ -175,7 +175,7 @@ public class Usuario implements JsonFormatter, Serializable{
 	public String getAulasRecebidas() {
 		JSONArray array = new JSONArray();
 		for(Aula b : aulasRecebidas) {
-			array.put(b);
+			array.put(b.toJson());
 		}
 		return array.toString();
 	}

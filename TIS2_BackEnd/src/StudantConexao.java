@@ -57,8 +57,12 @@ public class StudantConexao implements Container {
 				mensagem = stdService.getMyAulasDadas(request);
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
+			else if (path.startsWith("/verAula") && "POST".equals(method)) {
+				mensagem = stdService.getAula(request);
+				this.enviaResposta(Status.OK, response, mensagem);
+			}
 			else if (path.startsWith("/verCursos") && "POST".equals(method)) {
-				mensagem = stdService.getCursos(request);
+				mensagem = stdService.getCursos();
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
 			

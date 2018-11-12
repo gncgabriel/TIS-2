@@ -103,6 +103,7 @@ public class Studant implements JsonFormatter, Serializable {
 	}
 
 	public String getAula(int idAula) {
+		
 		for(Aula a:aulas) {
 			if(a.getId() == idAula) {
 				return a.toJson().toString();
@@ -142,17 +143,17 @@ public class Studant implements JsonFormatter, Serializable {
 		return null;
 	}
 	
-	public String addAula(int idAluno, String local, int canal, String data, int duracao, String curso,
+	public String addAula(int idAluno, String local, int canal, String data, String descricao, int duracao, String curso,
 			String horaInicio) {
 		Curso aux = null;
 		for (Curso c : cursos) {
-			if (c.getTitulo().equals(curso)) {
+			if (c.getCategoria().equals(curso)) {
 				aux = c;
 			}
 		}
 		idAula++;
-		Aula a = getUsuario(idAluno).receberAula(idAula, local, canal, data, duracao, aux, horaInicio);
-		aulas.add(getUsuario(idAluno).receberAula(idAula, local, canal, data, duracao, aux, horaInicio));
+		Aula a = getUsuario(idAluno).receberAula(idAula, local, canal, data,descricao,duracao, aux, horaInicio);
+		aulas.add(a);
 		return a.toJson().toString();
 		
 	}
@@ -186,8 +187,8 @@ public class Studant implements JsonFormatter, Serializable {
 	}
 // --------------------------------------------------------------------------------------------------------------------
 
-	public void addCurso(int id, String categoria, String titulo, String descricao) {
-		Curso c = new Curso(categoria, titulo, descricao);
+	public void addCurso(int id, String categoria) {
+		Curso c = new Curso(categoria);
 		for (Usuario u : users) {
 			if (u.getId() == id) {
 				u.addCursoMonitor(c);
@@ -202,6 +203,14 @@ public class Studant implements JsonFormatter, Serializable {
 			array.put(c.toJson());
 		}
 		return array.toString();
+	}
+	public Curso getCurso(String categoria) {
+		for(Curso c: cursos) {
+			if(c.getCategoria().equals(categoria)) {
+				return c;
+			}
+		}
+		return null;
 	}
 
 // --------------------------------------------------------------------------------------------------------------------
