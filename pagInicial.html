@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <title>Cadastro</title>
+    <title>Inicio</title>
 </head>
 <style>
     body{
@@ -123,6 +123,9 @@
     </script>
     <script >
 
+        if(localStorage.getItem('Status') != 1){
+            window.open('studantLogin.html','_self')
+        }
         function fazerLogoff() {
             localStorage.clear();
             window.open("studantLogin.html", "_self");

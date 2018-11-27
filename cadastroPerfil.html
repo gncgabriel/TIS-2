@@ -141,7 +141,10 @@
                         localStorage.setItem("Status",1);
                     } catch (erro) {
                         console.log(erro + "\t Email já cadastrado");
+                        break;
                     }
+                    alert("Cadastro realizado com sucesso");
+                    window.open('studantLogin.html','_self');
                 }
             }
             var nome = $("#nome").val()

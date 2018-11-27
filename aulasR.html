@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <title>Cadastro</title>
+    <title>Aulas</title>
 </head>
 <style>
     body{
@@ -133,6 +133,7 @@
                        
                         var jsonObj = JSON.parse(xmlhttp.responseText);
                         for(a=0; a<jsonObj.length;a++){
+                            
                             if(jsonObj[a].Status  == "0" || jsonObj[a].Status == 0){
                                 $("main").append('<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-warning" href="perfilDeAula.html?id='+jsonObj[a].ID+'" style="text-decoration:none"><div class="card-body"><h5 class="card-title">'+jsonObj[a].Descricao+'</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando Monitor</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>') 
                             }
@@ -142,6 +143,7 @@
                             if(jsonObj[a].Status  == "2" || jsonObj[a].Status == 2){
                                 $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-danger" href="javascript:void()" style="text-decoration:none"><div class="card-body"><h5 class="card-title">'+jsonObj[a].Descricao+'</h5><h6 class="card-subtitle mb-2 text-muted">Aula Cancelada</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>') 
                             }
+                            
 
                         }
 

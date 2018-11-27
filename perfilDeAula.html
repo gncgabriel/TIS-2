@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <title>Cadastro</title>
+    <title>Aula</title>
 </head>
 
 <body class="container col-12" style="background-color: white" onload="GetIt('http://127.0.0.1:7800')">
@@ -35,7 +35,7 @@
                     </div>
                 </nav>
     </div>
-    <div class="row text-center" style="padding:120px 5px 0px 5px;">
+    <div class="row text-center" style="padding:90px 5px 0px 5px;">
         <main class="col-sm-12 col-md-5" style="padding:10px 0px 0px 0px; margin: 0 auto; height: 500px; background-color: aquamarine">
             <h3 id="title">Curso Matematica</h3>
             <div style="float:left; padding: 0 20px 0 20px; margin-top: 30px; width: 200px;">
@@ -46,10 +46,13 @@
                 <p id="horario">Horário Inicio : 13:00</p>
                 <p id="duracao" style="margin-top:100px;">Duração : 1 hora</p>
             </div>
-            <div id="areaCodigo" style="margin-top:300px">
+            <div style="margin: 100px auto">
+                <p id="valor">Valor</p>
+            </div>
+            <div id="areaCodigo" style="margin-top:150px">
 
             </div>
-            <label>Só poderá ser cancelada com até 1 hora de antecedencia</label><br>
+            <small>Só poderá ser cancelada com até 1 hora de antecedencia</small><br>
             <button onclick="cancela('http://127.0.0.1:7800')" class="btn btn-danger col-md-3" style="margin-top:5px;">Cancelar
                 aula</button>
         </main>
@@ -117,6 +120,7 @@
                     $('#local').text(jsonObj.Local)
                     if (localStorage.getItem("Nome") == jsonObj.Aluno) {
                         $('#areaCodigo').html('<h6>Informe o código abaixo ao monitor para dar inicio a aula</h6><h4 class="text-danger">' + jsonObj.Codigo + '</h4>')
+                        $('#valor').text('Valor : '+jsonObj.Valor+' AntCoins')
                     }
 
                 } catch (erro) {

@@ -49,11 +49,11 @@
     <div class="row" style="padding-top:59px !important;">
         <main class="col-md-12">
             <form class="col-md-4" style="margin-top:10px;">
-                <div class="form-group d-inline-block col-md-4">
+                <div class="form-group d-inline-block col-md-12">
                     <label for="exampleFormControlInput1">Data da Aula</label>
-                    <input type="text" class="form-control" id="data" placeholder="dia/mes/ano">
+                    <input type="text" maxlength="10" class="form-control" onkeypress="dat()" id="data" placeholder="dia/mês/ano">
                 </div>
-                <div class="form-group  d-inline-block col-md-7">
+                <div class="form-group  d-inline-block col-md-12">
                     <label for="exampleFormControlSelect1">Selecione um curso</label>
                     <select class="form-control" id="curso">
                         <option>Cursos Disponíveis</option>
@@ -109,7 +109,7 @@
             localStorage.clear();
             window.open("studantLogin.html", "_self");
         }
-       
+
 
         function FactoryXMLHttpRequest() {
 
@@ -163,69 +163,80 @@
             }
         }
 
+        function dat(){
+           let myData = $('#data').val()
+           if(myData.length == 2 || myData.length == 5){
+            $('#data').val($('#data').val()+"/");
+           }
+            
+        }
+
         function solicitarAula(url) {
-            var xmlhttp = FactoryXMLHttpRequest();
-            let cnl
-            cnl = $("select#canal").children("option:selected").val();
-            if (cnl == "Presencial") {
-                cnl = "1"
-            }
-            if (cnl == "EAD") {
-                cnl = "1"
-            }
+           
+                var xmlhttp = FactoryXMLHttpRequest();
+                let cnl
+                cnl = $("select#canal").children("option:selected").val();
+                if (cnl == "Presencial") {
+                    cnl = "1"
+                }
+                if (cnl == "EAD") {
+                    cnl = "1"
+                }
 
-            let duracao;
-            duracao = $("select#duracao").children("option:selected").val();
-            if (duracao == "1 hora") {
-                duracao = "1"
-            }
-            if (duracao == "2 horas") {
-                duracao = "2"
-            }
-
-
-            let curso;
-            curso = $("select#curso").children("option:selected").val();
-
-            params = jQuery.param({
-                ID: localStorage.getItem("ID"),
-                Endereco: $("#local").val(),
-                Canal: cnl,
-                Data: $("#data").val(),
-                Descricao: $("#descricao").val(),
-                Duracao: duracao,
-                Curso: curso,
-                HInicio: $("#horaInicio").val()
-
-            });
-            a = decodeURIComponent(params);
+                let duracao;
+                duracao = $("select#duracao").children("option:selected").val();
+                if (duracao == "1 hora") {
+                    duracao = "1"
+                }
+                if (duracao == "2 horas") {
+                    duracao = "2"
+                }
 
 
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4) {
-                    // Javascript function JSON.parse to parse JSON data
-                    try {
-                        var jsonObj = JSON.parse(xmlhttp.responseText);
-                        if (jsonObj != null) {
-                            alert("Aula Criada");
-                            setTimeout(function () {
-                                window.open("aulasR.html", "_self");
-                            }, 300)
+                let curso;
+                curso = $("select#curso").children("option:selected").val();
+
+                params = jQuery.param({
+                    ID: localStorage.getItem("ID"),
+                    Endereco: $("#local").val(),
+                    Canal: cnl,
+                    Data: $("#data").val(),
+                    Descricao: $("#descricao").val(),
+                    Duracao: duracao,
+                    Curso: curso,
+                    HInicio: $("#horaInicio").val()
+
+                });
+                a = decodeURIComponent(params);
+
+
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        // Javascript function JSON.parse to parse JSON data
+                        try {
+                            var jsonObj = JSON.parse(xmlhttp.responseText);
+                            if (jsonObj != null) {
+                                alert("Aula Criada");
+                                setTimeout(function () {
+                                    window.open("aulasR.html", "_self");
+                                }, 300)
+                            }
+                        } catch (erro) {
+                            console.log(erro + "\t Não foi possível solicitar aula");
                         }
-                    } catch (erro) {
-                        console.log(erro + "\t Não foi possível solicitar aula");
                     }
                 }
-            }
 
-            if ($("#local").val() == "" || cnl == "Presencial ou EAD" || duracao == "Quantas horas terá a aula" || curso == "Cursos Disponíveis" || $("#horaInicio").val() == "" || $("#descricao").val() == "" || $("#data").val() == "") {
-                alert("Preencha todos os campos corretamente");
-            } else {
-                if (xmlhttp) {
-                    xmlhttp.open('post', url + "/criarAula?" + a, true);
-                    xmlhttp.send();
+                if ($("#local").val() == "" || cnl == "Presencial ou EAD" || duracao == "Quantas horas terá a aula" || curso == "Cursos Disponíveis" || $("#horaInicio").val() == "" || $("#descricao").val() == "" || $("#data").val() == "") {
+                    alert("Preencha todos os campos corretamente");
+                } else {
+                    if (xmlhttp) {
+                        xmlhttp.open('post', url + "/criarAula?" + a, true);
+                        xmlhttp.send();
+                    }
                 }
-            }
+
+               
 
         }
     </script>
