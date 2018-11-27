@@ -7,12 +7,14 @@ public class StudantService {
 	private Studant studant = a.lerArquivo(endereco);
 	
 	public StudantService() {
+		if(studant.getUsuario("caio@gmail.com") == null){
+			contasFake();
+		}
 		
-		contasFake();
 	}
-	//Contas pré criadas para teste
+	//Contas prï¿½ criadas para teste
 	public void contasFake() {
-		studant.addUsuario("Mia", "Kahlifa", "kah@gmail.com", 18, "11-54256984", "São Paulo", "São Paulo", "Centro",
+		studant.addUsuario("Mia", "Kahlifa", "kah@gmail.com", 18, "11-54256984", "Sï¿½o Paulo", "Sï¿½o Paulo", "Centro",
 				"senha", false);
 		studant.addUsuario("Jorge", "Amado", "jorge@gmail.com", 18, "21-3456789", "Rio de Janeiro", "Resende", "Centro",
 				"senha", true);

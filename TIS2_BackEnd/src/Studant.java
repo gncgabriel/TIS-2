@@ -140,6 +140,7 @@ public class Studant implements JsonFormatter, Serializable {
 				return a.toJson().toString();
 			}
 		}
+		
 		return null;
 	}
 	
@@ -151,6 +152,7 @@ public class Studant implements JsonFormatter, Serializable {
 				aux = c;
 			}
 		}
+		
 		idAula++;
 		Aula a = getUsuario(idAluno).receberAula(idAula, local, canal, data,descricao,duracao, aux, horaInicio);
 		aulas.add(a);
@@ -199,9 +201,11 @@ public class Studant implements JsonFormatter, Serializable {
 
 	public String verCursos() {
 		JSONArray array = new JSONArray();
-		for (Curso c : cursos) {
-			array.put(c.toJson());
-		}
+//		for (Curso c : cursos) {
+//			array.put(c.toJson());
+//		}
+		
+		cursos.forEach(c -> array.put(c.toJson()));
 		return array.toString();
 	}
 	public Curso getCurso(String categoria) {
