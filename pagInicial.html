@@ -27,8 +27,9 @@
     }
     .card{
         border: none !important;
-        border-radius: 15px;
+        border-radius: 5px;
         height: 150px;
+        margin:auto;
     }
 </style>
 
@@ -48,26 +49,30 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
                     </li>
-                    
+
                     <li class="nav-item">
-                        <a class="nav-link" onclick="fazerLogoff()"  href="#">Sair</a>
-                    </li> 
+                        <a class="nav-link" onclick="fazerLogoff()" href="#">Sair</a>
+                    </li>
 
                 </ul>
             </div>
         </nav>
     </div>
     <div class="row text-center" style="padding-top:59px !important;">
+
         <aside class="col-md-12 aside">
             <br>
-            <p id="h-solicite"></p>
-            <small>Aqui você pode solicitar ou dar aulas sobre qualquer tema</small>
-            <br>
-            <br>
-            <h4 id="antCoin">Você tem 100 Antcoins</h4>
+            <div class="card col-7">
+                <p id="h-solicite" style="color:mediumorchid"></p>
+                <h6>Aqui você pode solicitar ou dar aulas sobre qualquer tema...</h6>
+                <br>
+                <br>
+                <h4 id="antCoin" style="color:crimson">Você tem 100 Antcoins</h4>
+            </div>
         </aside>
+
         <main class="col-md-12 main">
-            
+
             <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
                 <a href="novaAula.html" style="text-decoration:none">
                     <div class="card-body">
@@ -117,19 +122,19 @@
 
 
     </script>
-    <script >
+    <script>
 
-        if(localStorage.getItem('Status') != 1){
-            window.open('studantLogin.html','_self')
+        //if(localStorage.getItem('Status') != 1){
+            //window.open('studantLogin.html','_self')
         }
         function fazerLogoff() {
             localStorage.clear();
             window.open("studantLogin.html", "_self");
         }
 
-        $("#h-solicite").text("Olá "+ localStorage.getItem("Nome")+", Bem vindo a Stud@nt")
+        $("#h-solicite").text("Olá " + localStorage.getItem("Nome") + ", Bem vindo a Stud@nt")
         $("#innerEmail").text(localStorage.getItem("Estado"))
-    
+
     </script>
 </body>
 
