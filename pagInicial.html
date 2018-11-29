@@ -8,15 +8,15 @@
 </head>
 <style>
     body{
-        background-color: rgb(243, 243, 243);
+        background-color: lightgreen;
     }
     .aside{
       
-        background-color: white;
+        background-color: transparent;
         min-height: 300px;
     }
     .main{
-        background-color: rgb(243, 243, 243);
+        background-color:transparent;
         min-height: 300px;
     }
     #h-solicite{
@@ -48,9 +48,7 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Meu Perfil</a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" onclick="fazerLogoff()"  href="#">Sair</a>
                     </li> 
@@ -63,15 +61,13 @@
         <aside class="col-md-12 aside">
             <br>
             <p id="h-solicite"></p>
-            <small>Aqui você pode solicitar ou dar aulas sobre qualquer tema</small><br>
-            <button class="btn btn-primary radius" style="margin-top:40px">Meu Perfil</button>
+            <small>Aqui você pode solicitar ou dar aulas sobre qualquer tema</small>
+            <br>
+            <br>
+            <h4 id="antCoin">Você tem 100 Antcoins</h4>
         </aside>
         <main class="col-md-12 main">
-            <div class="col-12" style="margin-top:10px;">
-                <p> </p>
-            </div>
-            <br>
-            <br>
+            
             <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
                 <a href="novaAula.html" style="text-decoration:none">
                     <div class="card-body">
@@ -102,9 +98,9 @@
             <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
                 <a href="javascript:void()" style="text-decoration:none">
                     <div class="card-body">
-                        <h5 class="card-title">Aulas Dadas</h5>
+                        <h5 class="card-title">Adicionar AntCoins</h5>
                         <h6 class="card-subtitle mb-2 text-muted"></h6><br>
-                        <p class="card-text">Veja e gerencie todas suas aulas dadas</p>
+                        <p class="card-text">Adicione Antcoins para solicitar aulas</p>
                     </div>
                 </a>
             </div>
