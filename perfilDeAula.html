@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>stud@nt | Perfil de Aula</title>
     <style>
-    body{background-color: lightgreen;}
-    .corpo{width: 50%;margin:auto;margin-top: 100px;margin-bottom: 5px;padding: 10px;}
+        body{background-color: lightgreen;}
+    .corpo{width: 50%;margin:auto;margin-top: 130px;margin-bottom: 5px;padding: 10px;}
     .row{margin:auto;}
+    .card-body{padding: 10px;}
     .card{background-color:white; border-radius: 6px;border: transparent}
     .card2{margin:10px;width: 300px;}
-    .card3{width:100%;margin:10px;}
-    .bg-color{background-color:#FA8072;}
-    .bg-color2{background-color:#6495ED;}
-    .bg-color3{background-color:grey;}
+    .card3{width:100%;margin:10px;padding:0px;}
+    .bg-color{background-color:rgb(15, 121, 15);}
+    .bg-color2{background-color:darkmagenta;}
+    .bg-color3{background-color:darkcyan;}
     p{margin: 5px;}
     </style>
-    
-    
+
+
 </head>
 
 <body class="container col-12" onload="GetIt('http://127.0.0.1:7800')">
@@ -36,10 +37,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="pagInicial.html">Inicio <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="perfilUsuario.html">Meu Perfil</a>
+                        <a class="nav-link" href="pagInicial.html">Home<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" onclick="fazerLogoff()" href="index.html">Sair</a>
@@ -50,49 +48,49 @@
         </nav>
     </div>
     <div class="card corpo text-center">
-        
-            
-                <h3 id="title">Curso Matematica</h3>
-            
 
-            <div class="row">
-                <div class="card card2 text-white bg-color mb-3" style="max-width: 18rem;">
-                    <div class="card-body">
-                        <p id="monitor">Monitor : César do Filme</p>
-                        <p id="local">Av. Afonso Pena 2182 - Edificio Casa Branca</p>
-                    </div>
-                </div>
-                <div class="card card2 text-white bg-color mb-3" style="max-width: 18rem;">
-                    <div class="card-body">
-                        <p id="horario">Horário Inicio : 13:00</p>
-                        <p id="duracao">Duração : 1 hora</p>
-                    </div>
+
+        <h3 id="title">Curso Matematica</h3>
+
+
+        <div class="row">
+            <div class="card card2 text-white bg-color mb-3" style="max-width: 18rem;">
+                <div class="card-body">
+                    <p id="monitor">Monitor : César do Filme</p>
+                    <p id="local">Av. Afonso Pena 2182 - Edificio Casa Branca</p>
                 </div>
             </div>
-
-
-            <div class="row col-12">
-                <div class="card card3 text-white bg-color2 mb-3">
-                    <div class="card-body">
-                        <p id="valor">Valor</p>
-                    </div>
+            <div class="card card2 text-white bg-color mb-3" style="max-width: 18rem;">
+                <div class="card-body">
+                    <p id="horario">Horário Inicio : 13:00</p>
+                    <p id="duracao">Duração : 1 hora</p>
                 </div>
             </div>
+        </div>
 
-            <div class="row col-12">
-                    <div class="card card3 text-white bg-color3 mb-3">
-                            <div class="card-body">
-                                    <div id="areaCodigo">Código</div>
-                                </div>
-                    </div>
+
+        <div class="row col-12">
+            <div class="card card3 text-white bg-color2 mb-3">
+                <div class="card-body">
+                    <p id="valor" style="margin: 0px;">Valor</p>
                 </div>
+            </div>
+        </div>
 
-            
-            <button onclick="cancela('http://127.0.0.1:7800')" class="btn btn-danger col-md-3" style="margin:10px auto;">Cancelar
-                aula</button>
+        <div class="row col-12">
+            <div class="card card3 text-white bg-color3 mb-3">
+                <div class="card-body">
+                    <div id="areaCodigo">Código</div>
+                </div>
+            </div>
+        </div>
 
-            <small><i>*Só poderá ser cancelada com até 1 hora de antecedencia.</i></small>
-        
+
+        <button onclick="cancela('http://127.0.0.1:7800')" class="btn btn-danger col-md-3" style="margin:10px auto;">Cancelar
+            aula</button>
+
+        <small><i>*Só poderá ser cancelada com até 1 hora de antecedencia.</i></small>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
