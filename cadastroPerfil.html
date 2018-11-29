@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>Cadastro</title>
+
+    <style>
+        body{background-color:lightgreen;}
+    .card{margin:auto;border:transparent;border-radius: 6px;}
+    .card1{margin-right: 0px;}
+    .card2{margin-left: 80px;}
+    .baixo{margin-top: 5px;}
+    </style>
 </head>
 
 <body class="container col-12">
@@ -18,65 +26,67 @@
         </nav>
     </div>
     <div class="row" style="padding-top:80px;">
-        <aside class="offset-md-2 col-md-4" style="padding-top:10px;">
+        <aside class="card card1 col-md-3" style="padding-top:10px;">
             <form>
                 <div class="form-group">
                     <label for="Name">Nome</label>
-                    <input id="nome" class="form-control col-md-12 col-lg-8" type="text" placeholder="Nome">
+                    <input id="nome" class="form-control" type="text" placeholder="Nome">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Sobrenome</label>
-                    <input id="sobrenome" class="form-control col-md-12 col-lg-8" type="text" placeholder="Sobrenome">
+                    <input id="sobrenome" class="form-control" type="text" placeholder="Sobrenome">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Email</label>
-                    <input id="email" class="form-control col-md-12 col-lg-8" type="email" placeholder="Email">
-                    <small id="emailHelp" class="form-text text-muted">Fique tranquilo, não iremos lotar seu email !</small>
+                    <input id="email" class="form-control" type="email" placeholder="Email">
+                    <small id="emailHelp" class="form-text text-muted">Fique tranquilo, não iremos lotar o seu email!</small>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Idade</label>
                     <div class="d-block"></div>
-                    <input id="idade" class="form-control col-md-12 col-lg-8 d-inline-block" type="number" placeholder="idade">
+                    <input id="idade" class="form-control d-inline-block" type="number" placeholder="idade">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Celular</label>
-                    <input id="celular" class="form-control col-md-12 col-lg-8" type="tel" placeholder="ddd + número">
+                    <input id="celular" class="form-control" type="tel" placeholder="ddd + número">
                 </div>
             </form>
         </aside>
-        <main class="col-md-5" style="padding-top:10px;">
+        <main class="card card2 col-md-3" style="padding-top:10px;">
             <form>
                 <div class="form-group">
                     <label for="Name">Estado</label>
-                    <input id="estado" class="form-control col-md-12 col-lg-8" type="text" placeholder="Ex: Minas Gerais">
+                    <input id="estado" class="form-control" type="text" placeholder="Ex: Minas Gerais">
 
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Cidade</label>
-                    <input id="cidade" class="form-control col-md-12 col-lg-8" type="text" placeholder="Ex: Belo Horizonte">
+                    <input id="cidade" class="form-control" type="text" placeholder="Ex: Belo Horizonte">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Bairro</label>
-                    <input id="bairro" class="form-control col-md-12 col-lg-8" type="text" placeholder="Ex: Pampulha">
+                    <input id="bairro" class="form-control" type="text" placeholder="Ex: Pampulha">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Senha</label>
-                    <input id="senha" class="form-control col-md-12 col-lg-8" type="password">
+                    <input id="senha" class="form-control" type="password">
                     <small id="passwordHelpInline" class="text-muted">6-20 caracteres</small>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Confirma Senha</label>
-                    <input onchange="verificaSenhas()" id="confirmSenha" class="form-control col-md-12 col-lg-8" type="password">
+                    <input onchange="verificaSenhas()" id="confirmSenha" class="form-control" type="password">
                     <small id="confirm" class="form-text text-muted"></small>
                 </div>
             </form>
         </main>
-        <div class="offset-md-3 col-md-4">
-            <div class="offset-md-5 col-10 mr-sm-2">
+
+        <div class="baixo col-12">
+            <div class="text-center">
                 <input id="eMonitor" type="checkbox">
-                <label>Desejo ser Monitor</label>
+                <label style="font-weight: bold">Desejo ser Monitor</label><br>
+                <button style="margin:auto;" id="doCad" onclick="GetIt('http://127.0.0.1:7800')" class="col-2 btn btn-danger">Cadastrar</button>
             </div>
-            <button id="doCad" onclick="GetIt('http://127.0.0.1:7800')" class="offset-md-3 col-sm-12 col-md-8 btn btn-primary">Cadastrar</button>
+
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -128,23 +138,23 @@
                     try {
                         var jsonObj = JSON.parse(xmlhttp.responseText);
                         console.log("Cadastro Success");
-                        localStorage.setItem("ID",jsonObj.ID);
-                        localStorage.setItem("Nome",jsonObj.Nome);
-                        localStorage.setItem("Sobrenome",jsonObj.Sobrenome);
-                        localStorage.setItem("Email",email);
-                        localStorage.setItem("Idade",jsonObj.Idade);
-                        localStorage.setItem("Telefone",jsonObj.Telefone);
-                        localStorage.setItem("Cidade",jsonObj.Cidade);
-                        localStorage.setItem("Estado",jsonObj.Estado);
-                        localStorage.setItem("Bairro",jsonObj.Bairro);
-                        localStorage.setItem("EMonitor",jsonObj.EMonitor);
-                        localStorage.setItem("Status",1);
+                        localStorage.setItem("ID", jsonObj.ID);
+                        localStorage.setItem("Nome", jsonObj.Nome);
+                        localStorage.setItem("Sobrenome", jsonObj.Sobrenome);
+                        localStorage.setItem("Email", email);
+                        localStorage.setItem("Idade", jsonObj.Idade);
+                        localStorage.setItem("Telefone", jsonObj.Telefone);
+                        localStorage.setItem("Cidade", jsonObj.Cidade);
+                        localStorage.setItem("Estado", jsonObj.Estado);
+                        localStorage.setItem("Bairro", jsonObj.Bairro);
+                        localStorage.setItem("EMonitor", jsonObj.EMonitor);
+                        localStorage.setItem("Status", 1);
                     } catch (erro) {
                         console.log(erro + "\t Email já cadastrado");
                         break;
                     }
                     alert("Cadastro realizado com sucesso");
-                    window.open('studantLogin.html','_self');
+                    window.open('studantLogin.html', '_self');
                 }
             }
             var nome = $("#nome").val()
@@ -165,9 +175,9 @@
             };
 
             params = jQuery.param({
-                email: email, senha: senha, nome:nome,
-                sobrenome:sobrenome,idade:idade,telefone:celular,
-                estado:estado,cidade:cidade,bairro:bairro,eMonitor:eMonitor
+                email: email, senha: senha, nome: nome,
+                sobrenome: sobrenome, idade: idade, telefone: celular,
+                estado: estado, cidade: cidade, bairro: bairro, eMonitor: eMonitor
             })
 
             params = decodeURIComponent(params)
@@ -183,7 +193,7 @@
             if ($("#senha").val() != $("#confirmSenha").val()) {
                 $("#confirmSenha").addClass("bg-danger");
                 $("#confirm").text("As senha não conferem")
-            }else{
+            } else {
                 $("#confirmSenha").removeClass("bg-danger");
                 $("#confirm").text(" ");
             }
