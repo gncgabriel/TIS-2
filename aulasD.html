@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <title>Aulas</title>
+</head>
+<style>
+    body{
+        background-color: lightgreen;
+    }
+    .aside{
+      
+        background-color: white;
+        min-height: 300px;
+    }
+    .main{
+        background-color: transparent;
+        min-height: 300px;
+    }
+    #h-solicite{
+        font-size: 27pt;
+    }
+    .radius{
+        border-radius: 100px !important; 
+    }
+    .Mycard{
+        min-height: 200px;
+        max-height: 200px;
+        background-color: white;
+        border-radius: 15px;
+        float: left;
+        margin-left: 20px !important;
+    }
+    .card-text{
+        margin-top: 25px;
+    }
+    
+</style>
+
+<body class="container col-12" onload="GetIt('http://127.0.0.1:7800')">
+    <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top col-12">
+            <a class="navbar-brand" href="#">
+                <img src="https://uploaddeimagens.com.br/images/001/648/956/full/Logo_fundo_transparente.png?1538505137"
+                    width="130px" class="d-inline-block align-top" alt="stud@nt">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pagInicial.html">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item float-right">
+                        <a class="nav-link" onclick="fazerLogoff()"  href="#">Sair</a>
+                    </li> 
+
+                </ul>
+                <ul>
+                    
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="row text-center" style="padding-top:59px !important;">
+        <main class="col-md-12 main">
+            <div class="col-12" style="margin-top:10px;">
+                <p> </p>
+            </div>
+            <br>
+            <br>
+           
+        </main>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script>
+
+
+    </script>
+    <script>
+        var div = '<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a href="novaAula.html" style="text-decoration:none"><div class="card-body"><h5 class="card-title">Solicitar Nova aula</h5><h1 class="card-subtitle mb-2">+</h1><p class="card-text">Clique aqui e solicite uma nova aula</p></div></a></div>'
+
+        function fazerLogoff() {
+            localStorage.clear();
+            window.open("studantLogin.html", "_self");
+        }
+
+        function FactoryXMLHttpRequest() {
+
+            if (window.XMLHttpRequest) {
+                return new XMLHttpRequest();// Opera 8.0+, Firefox, Chrome, Safari
+            }
+            else if (window.XDomainRequest) {
+                return new XDomainRequest(); // Antigo Safari
+            }
+            else if (window.ActiveXObject) {
+                var msxmls = new Array(// Internet Explorer
+                    'Msxml2.XMLHTTP',
+                    'Microsoft.XMLHTTP',
+                    'Msxml3.XMLHTTP',
+                    'Msxml2.XMLHTTP.7.0',
+                    'Msxml2.XMLHTTP.6.0',
+                    'Msxml2.XMLHTTP.5.0',
+                    'Msxml2.XMLHTTP.4.0',
+                    'Msxml2.XMLHTTP.3.0');
+                for (var i = 0; i < msxmls.length; i++) {
+                    try {
+                        return new ActiveXObject(msxmls[i]);
+                    } catch (e) {
+                    }
+                }
+            } else throw new Error("Could not instantiate XMLHttpRequest");
+        }
+
+
+        function GetIt(url) {
+
+            var xmlhttp = FactoryXMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    // Javascript function JSON.parse to parse JSON data
+                    try {
+                       
+                        var jsonObj = JSON.parse(xmlhttp.responseText);
+                        for(a=0; a<jsonObj.length;a++){
+                            
+                           
+                                $("main").append('<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-warning" href="perfilDeAula.html?id='+jsonObj[a].ID+'" style="text-decoration:none"><div class="card-body"><h5 class="card-title">'+jsonObj[a].Descricao+'</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando Monitor</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>') 
+                           
+                            
+
+                        }
+
+                    } catch (erro) {
+                        console.log(erro + "\t Não foi possível ver aulas");
+                    }
+                    $("main").append(div);
+                }
+            }
+         
+
+            params = jQuery.param({
+                Filtro:"Todos",
+                ID:localStorage.getItem('ID')
+            });
+
+            params = decodeURIComponent(params)
+
+            if (xmlhttp) {
+                xmlhttp.open('post', url + "/getAulasSemMonitor?" + params, true);
+                xmlhttp.send();
+            }
+        }
+    </script>
+</body>
+
+</html>

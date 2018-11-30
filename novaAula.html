@@ -217,12 +217,16 @@
                     // Javascript function JSON.parse to parse JSON data
                     try {
                         var jsonObj = JSON.parse(xmlhttp.responseText);
+                        if(jsonObj.erro != null){
+                            alert("Saldo Insuficiente para solicitar aula")
+                        }else{
                         if (jsonObj != null) {
                             alert("Aula Criada");
                             setTimeout(function () {
                                 window.open("aulasR.html", "_self");
                             }, 300)
                         }
+                    }
                     } catch (erro) {
                         console.log(erro + "\t Não foi possível solicitar aula");
                     }
