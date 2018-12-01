@@ -133,11 +133,12 @@
             var xmlhttp = FactoryXMLHttpRequest();
 
             xmlhttp.onreadystatechange = function () {
+                var aux = 0;
                 if (xmlhttp.readyState == 4) {
                     // Javascript function JSON.parse to parse JSON data
                     try {
                         var jsonObj = JSON.parse(xmlhttp.responseText);
-                        console.log("Cadastro Success");
+
                         localStorage.setItem("ID", jsonObj.ID);
                         localStorage.setItem("Nome", jsonObj.Nome);
                         localStorage.setItem("Sobrenome", jsonObj.Sobrenome);
@@ -149,12 +150,18 @@
                         localStorage.setItem("Bairro", jsonObj.Bairro);
                         localStorage.setItem("EMonitor", jsonObj.EMonitor);
                         localStorage.setItem("Status", 1);
+
                     } catch (erro) {
+                        aux++;
                         console.log(erro + "\t Email já cadastrado");
-                        break;
+                        alert("Email já cadastrado")
+
                     }
-                    alert("Cadastro realizado com sucesso");
-                    window.open('studantLogin.html', '_self');
+                    if (aux == 0) {
+                        alert("Cadastro realizado com sucesso");
+                        window.open('studantLogin.html', '_self');
+                    }
+
                 }
             }
             var nome = $("#nome").val()

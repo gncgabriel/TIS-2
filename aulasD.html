@@ -56,25 +56,47 @@
                         <a class="nav-link" href="pagInicial.html">Inicio <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item float-right">
-                        <a class="nav-link" onclick="fazerLogoff()"  href="#">Sair</a>
-                    </li> 
+                        <a class="nav-link" onclick="fazerLogoff()" href="#">Sair</a>
+                    </li>
 
                 </ul>
                 <ul>
-                    
+
                 </ul>
             </div>
         </nav>
     </div>
-    <div class="row text-center" style="padding-top:59px !important;">
-        <main class="col-md-12 main">
-            <div class="col-12" style="margin-top:10px;">
+    <div class="row" style="padding-top:59px !important;">
+        <main class="col-md-12 main" style=" margin-top: 10px;">
+            <h4 class="text-center" style="margin-top:10px;">Aulas Aguardando Monitor</h4>
+            <div class="col-12">
                 <p> </p>
             </div>
-            <br>
-            <br>
-           
+          
+
         </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="exampleModal" tabindex="-1" style="background-color:#0000009d" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Vire um monitor</h5>
+                    <button type="button" class="close" onclick="$('.modal').removeClass('d-block'); voltar()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Você precisa ser um monitor para dar aulas. Vire um monitor agora !
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="$('.modal').removeClass('d-block'); voltar()">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="viraMonitor('http://127.0.0.1:7800')">Virar monitor</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -87,6 +109,13 @@
 
     </script>
     <script>
+        if (localStorage.getItem('EMonitor') == 'false') {
+            $('.modal').addClass('d-block');
+        }
+
+        function voltar() {
+            window.open('pagInicial.html', '_self');
+        }
         var div = '<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a href="novaAula.html" style="text-decoration:none"><div class="card-body"><h5 class="card-title">Solicitar Nova aula</h5><h1 class="card-subtitle mb-2">+</h1><p class="card-text">Clique aqui e solicite uma nova aula</p></div></a></div>'
 
         function fazerLogoff() {
@@ -130,34 +159,66 @@
                 if (xmlhttp.readyState == 4) {
                     // Javascript function JSON.parse to parse JSON data
                     try {
-                       
-                        var jsonObj = JSON.parse(xmlhttp.responseText);
-                        for(a=0; a<jsonObj.length;a++){
-                            
-                           
-                                $("main").append('<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-warning" href="perfilDeAula.html?id='+jsonObj[a].ID+'" style="text-decoration:none"><div class="card-body"><h5 class="card-title">'+jsonObj[a].Descricao+'</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando Monitor</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>') 
-                           
-                            
 
+                        var jsonObj = JSON.parse(xmlhttp.responseText);
+                        for (a = 0; a < jsonObj.length; a++) {
+                            if (jsonObj[a].Monitor == "Aguardando Monitor")
+                                $("main").append('<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-warning" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando Monitor</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
                         }
 
                     } catch (erro) {
                         console.log(erro + "\t Não foi possível ver aulas");
                     }
-                    $("main").append(div);
+                    //   $("main").append(div);
                 }
             }
-         
+
 
             params = jQuery.param({
-                Filtro:"Todos",
-                ID:localStorage.getItem('ID')
+                Filtro: "Todos",
+                ID: localStorage.getItem('ID')
             });
 
             params = decodeURIComponent(params)
 
             if (xmlhttp) {
                 xmlhttp.open('post', url + "/getAulasSemMonitor?" + params, true);
+                xmlhttp.send();
+            }
+        }
+        function viraMonitor(url) {
+          
+            var xmlhttp = FactoryXMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                   
+                    // Jav  ascript function JSON.parse to parse JSON data
+                    try {
+
+                        var jsonObj = JSON.parse(xmlhttp.responseText);
+                        if(jsonObj.EMonitor == true || jsonObj.EMonitor == 'true'){
+                            localStorage.setItem('EMonitor',jsonObj.EMonitor);
+                            alert('Você agora é um(a) Monitor(a) do Stud@nt')
+                            location.reload();
+                        }
+                     
+
+                    } catch (erro) {
+                        console.log(erro + "\t Não foi possível ver aulas");
+                    }
+                    //   $("main").append(div);
+                }
+            }
+
+            params = jQuery.param({
+                ID: localStorage.getItem('ID')
+            });
+
+            params2 = decodeURIComponent(params)
+
+            if (xmlhttp) {
+                xmlhttp.open('post', url + "/virarMonitor?" + params2, true);
                 xmlhttp.send();
             }
         }

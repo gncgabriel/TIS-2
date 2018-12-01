@@ -8,7 +8,7 @@
     <title>stud@nt | Perfil de Aula</title>
     <style>
         body{background-color: lightgreen;}
-    .corpo{width: 50%;margin:auto;margin-top: 130px;margin-bottom: 5px;padding: 10px;}
+    .corpo{width: 50%;margin:auto;margin-top: 100px;margin-bottom: 5px;padding: 10px;}
     .row{margin:auto;}
     .card-body{padding: 10px;}
     .card{background-color:white; border-radius: 6px;border: transparent}
@@ -51,6 +51,7 @@
 
 
         <h3 id="title">Curso Matematica</h3>
+        <label id="Aluno">Aluno : mia</label>
 
 
         <div class="row">
@@ -77,7 +78,7 @@
             </div>
         </div>
 
-        <div class="row col-12">
+        <div id="divCodigo" class="  d-none row col-12">
             <div class="card card3 text-white bg-color3 mb-3">
                 <div class="card-body">
                     <div id="areaCodigo">Código</div>
@@ -86,10 +87,13 @@
         </div>
 
 
-        <button onclick="cancela('http://127.0.0.1:7800')" class="btn btn-danger col-md-3" style="margin:10px auto;">Cancelar
+        <button id="btnCancelaAula" onclick="cancela('http://127.0.0.1:7800')" class="d-none btn btn-danger col-md-3"
+            style="margin:10px auto;">Cancelar
+            aula</button>
+        <button id="btnAceitaAula" onclick="darAula('http://127.0.0.1:7800')" class="btn btn-success col-md-3" style="margin:10px auto;">Aceitar
             aula</button>
 
-        <small><i>*Só poderá ser cancelada com até 1 hora de antecedencia.</i></small>
+        <small id="detalhe" class="d-none"><i>*Só poderá ser cancelada com até 1 hora de antecedencia.</i></small>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -150,12 +154,21 @@
                     } else {
                         $('#monitor').text(jsonObj.Monitor);
                     }
-                    $('#horario').text(jsonObj.Hora_inicio)
-                    $('#duracao').text('Duração : ' + jsonObj.Duracao + ' Hora')
+
+                    $('#horario').text("Hora de inicio " + jsonObj.Hora_Inicio)
+                    $('#duracao').text('Duração : ' + jsonObj.Duracao + ' Hora(s)')
                     $('#local').text(jsonObj.Local)
+                    $('#valor').text('Valor : ' + jsonObj.Valor + ' AntCoins')
                     if (localStorage.getItem("Nome") == jsonObj.Aluno) {
+                        $('#Aluno').remove()
+                        $('#btnAceitaAula').addClass('d-none')
+                        $('#btnCancelaAula').removeClass('d-none')
+                        $('#detalhe').removeClass('d-none')
+                        $('#divCodigo').removeClass('d-none')
                         $('#areaCodigo').html('<h6>Informe o código abaixo ao monitor para dar inicio a aula</h6><h4 class="text-dark">' + jsonObj.Codigo + '</h4>')
-                        $('#valor').text('Valor : ' + jsonObj.Valor + ' AntCoins')
+
+                    } else {
+                        $('#Aluno').text("Aluno(a): " + jsonObj.Aluno)
                     }
 
                 } catch (erro) {
@@ -209,6 +222,42 @@
 
         if (xmlhttp) {
             xmlhttp.open('post', url + "/cancelarAula?" + params, true);
+            xmlhttp.send();
+        }
+
+    }
+    function darAula(url) {
+        var xmlhttp = FactoryXMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                // Javascript function JSON.parse to parse JSON data
+                try {
+
+                    var jsonObj = JSON.parse(xmlhttp.responseText);
+                    if(jsonObj.Monitor == localStorage.getItem('Nome')){
+                        alert("Você é o monitor da aula")
+                    }
+
+                } catch (erro) {
+                    console.log(erro + "\t Não foi dar essa cancelar essa aula");
+                }
+            }
+        }
+
+
+
+
+
+        params = jQuery.param({
+            IdAula: id,
+            ID: localStorage.getItem('ID')
+        });
+
+        params = decodeURIComponent(params)
+
+        if (xmlhttp) {
+            xmlhttp.open('post', url + "/darAula?" + params, true);
             xmlhttp.send();
         }
 

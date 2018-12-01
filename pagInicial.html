@@ -14,7 +14,8 @@
     .aside {
 
         background-color: transparent;
-        min-height: 300px;
+        min-height: 200px;
+
     }
 
     .main {
@@ -42,11 +43,11 @@
     <div class="row">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top col-12">
             <a class="navbar-brand" href="index.html">
-                <img src="https://uploaddeimagens.com.br/images/001/648/956/full/Logo_fundo_transparente.png?1538505137" width="130px" class="d-inline-block align-top"
-                    alt="stud@nt">
+                <img src="https://uploaddeimagens.com.br/images/001/648/956/full/Logo_fundo_transparente.png?1538505137"
+                    width="130px" class="d-inline-block align-top" alt="stud@nt">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -62,6 +63,7 @@
                     </li>
 
                 </ul>
+
             </div>
         </nav>
     </div>
@@ -69,8 +71,8 @@
 
         <aside class="col-md-12 aside">
             <br>
-            <div class="card col-7">
-                <p id="h-solicite" style="color:mediumorchid"></p>
+            <div class="card col-9">
+                <p id="h-solicite" class="text-primary"></p>
                 <h6>Aqui você pode solicitar ou dar aulas sobre qualquer tema...</h6>
                 <h4 id="antCoin" style="color:crimson">Você tem 100 Antcoins</h4>
             </div>
@@ -91,10 +93,10 @@
             <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
                 <a href="aulasR.html" style="text-decoration:none">
                     <div class="card-body">
-                        <h5 class="card-title">Aulas Criadas</h5>
+                        <h5 class="card-title">Minhas Aulas</h5>
                         <h6 class="card-subtitle mb-2 text-muted"></h6>
                         <br>
-                        <p class="card-text">Veja todas suas aulas solicitadas</p>
+                        <p class="card-text">Gerencia aulas criadas e aulas aceitas</p>
                     </div>
                 </a>
             </div>
@@ -109,7 +111,7 @@
                 </a>
             </div>
             <div class="card text-center" style="width: 250px; margin: 0 auto; display: inline-block;">
-                <a href="javascript:void()" style="text-decoration:none">
+                <a href="addCoin.html" style="text-decoration:none">
                     <div class="card-body">
                         <h5 class="card-title">Adicionar AntCoins</h5>
                         <h6 class="card-subtitle mb-2 text-muted"></h6>
@@ -181,16 +183,16 @@
                     try {
 
                         var jsonObj = JSON.parse(xmlhttp.responseText);
-              
-                            $("#antCoin").text("Você tem "+jsonObj.Carteira+" Antcoins")
+
+                        $("#antCoin").text("Você tem " + jsonObj.Carteira + " Antcoins")
 
 
-                        
+
 
                     } catch (erro) {
                         console.log(erro + "\t Não foi possível ver antCoin");
                     }
-                   
+
                 }
             }
 

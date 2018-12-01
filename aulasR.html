@@ -17,7 +17,7 @@
     }
     .main{
         background-color: transparent;
-        min-height: 300px;
+        min-height: 230px;
     }
     #h-solicite{
         font-size: 27pt;
@@ -56,25 +56,23 @@
                         <a class="nav-link" href="pagInicial.html">Inicio <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item float-right">
-                        <a class="nav-link" onclick="fazerLogoff()"  href="#">Sair</a>
-                    </li> 
+                        <a class="nav-link" onclick="fazerLogoff()" href="#">Sair</a>
+                    </li>
 
                 </ul>
                 <ul>
-                    
+
                 </ul>
             </div>
         </nav>
     </div>
-    <div class="row text-center" style="padding-top:59px !important;">
-        <main class="col-md-12 main">
-            <div class="col-12" style="margin-top:10px;">
-                <p> </p>
-            </div>
-            <br>
-            <br>
-           
+    <div class="row text-center" style="padding: 10px;">
+        <main class="col-md-12 main" style="border-top:1px solid black; border-bottom:1px solid black;margin-top: 70px">
+            <h3>Aulas Criadas</h3>
         </main>
+        <aside class="col-md-12 main" style="border-top:1px solid black; border-bottom:1px solid black;margin-top: 70px">
+            <h3>Aulas à lecionar</h3>
+        </aside>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -130,20 +128,20 @@
                 if (xmlhttp.readyState == 4) {
                     // Javascript function JSON.parse to parse JSON data
                     try {
-                       
+
                         var jsonObj = JSON.parse(xmlhttp.responseText);
-                        for(a=0; a<jsonObj.length;a++){
-                            
-                            if(jsonObj[a].Status  == "0" || jsonObj[a].Status == 0){
-                                $("main").append('<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-warning" href="perfilDeAula.html?id='+jsonObj[a].ID+'" style="text-decoration:none"><div class="card-body"><h5 class="card-title">'+jsonObj[a].Descricao+'</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando Monitor</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>') 
+                        for (a = 0; a < jsonObj.length; a++) {
+
+                            if (jsonObj[a].Status == "0" || jsonObj[a].Status == 0) {
+                                $("main").append('<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-warning" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando Monitor</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
                             }
-                            if(jsonObj[a].Status  == "1" || jsonObj[a].Status == 1){
-                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-success" href="javascript:void()" style="text-decoration:none"><div class="card-body"><h5 class="card-title">'+jsonObj[a].Descricao+'</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando o inicio da aula</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>') 
+                            if (jsonObj[a].Status == "1" || jsonObj[a].Status == 1) {
+                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-success" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando o inicio da aula</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
                             }
-                            if(jsonObj[a].Status  == "2" || jsonObj[a].Status == 2){
-                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-danger" href="javascript:void()" style="text-decoration:none"><div class="card-body"><h5 class="card-title">'+jsonObj[a].Descricao+'</h5><h6 class="card-subtitle mb-2 text-muted">Aula Cancelada</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>') 
+                            if (jsonObj[a].Status == "2" || jsonObj[a].Status == 2) {
+                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-danger" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Cancelada</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
                             }
-                            
+
 
                         }
 
@@ -153,10 +151,10 @@
                     $("main").append(div);
                 }
             }
-         
+
 
             params = jQuery.param({
-                ID:localStorage.getItem("ID")
+                ID: localStorage.getItem("ID")
             });
 
             params = decodeURIComponent(params)
@@ -165,7 +163,50 @@
                 xmlhttp.open('post', url + "/aulasRecebidas?" + params, true);
                 xmlhttp.send();
             }
+            aulasDadas(url)
         }
+
+
+        function aulasDadas(url) {
+
+            var xmlhttp = FactoryXMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    // Javascript function JSON.parse to parse JSON data
+                    try {
+
+                        var jsonObj2 = JSON.parse(xmlhttp.responseText);
+                        for (b = 0; b < jsonObj2.length; b++) {
+                            if (jsonObj2[b].Status == "1" || jsonObj2[b].Status == 1) {
+                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-success" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando o inicio da aula</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
+                            }
+                            if (jsonObj2[b].Status == "2" || jsonObj2[b].Status == 2) {
+                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-danger" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Cancelada</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
+                            }
+                        }
+
+                    } catch (erro) {
+                        console.log(erro + "\t Não foi possível ver aulas Dadas");
+                    }
+
+                }
+            }
+
+
+            params = jQuery.param({
+                ID: localStorage.getItem("ID")
+            });
+
+            params = decodeURIComponent(params)
+
+            if (xmlhttp) {
+                xmlhttp.open('post', url + "/aulasDadas?" + params, true);
+                xmlhttp.send();
+            }
+        }
+
+
     </script>
 </body>
 

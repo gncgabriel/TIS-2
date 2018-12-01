@@ -63,7 +63,7 @@
                 </div>
                 <div class="form-group d-inline-block col-md-5">
                     <label for="exampleFormControlSelect2">Selecione o tipo da aula</label>
-                    <select class="form-control" id="canal">
+                    <select onchange="calcula()" class="form-control" id="canal">
                         <option>Presencial ou EAD</option>
                         <option>Presencial</option>
                         <option>EAD</option>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="form-group d-inline-block col-md-6">
                     <label for="exampleFormControlSelect2">Selecione a duração da aula</label>
-                    <select class="form-control" id="duracao">
+                    <select onchange="calcula()" class="form-control" id="duracao">
                         <option>Horas</option>
                         <option>1 hora</option>
                         <option>2 horas</option>
@@ -91,6 +91,7 @@
                 </div>
                 <button type="button" id="addAula" onclick="solicitarAula('http://127.0.0.1:7800')" class="btn btn-primary">Solicitar
                     Aula</button>
+                    <small id="valor">Valor da aula:</small>
                 <a class="text-danger float-right" href="pagInicial.html" style="margin-top:10px;">Voltar</a>
             </form>
         </main>
@@ -106,6 +107,34 @@
 
     </script>
     <script>
+        function calcula(){
+            let cnl
+            cnl = $("select#canal").children("option:selected").val();
+            if (cnl == "Presencial") {
+                cnl = "1"
+            }
+            if (cnl == "EAD") {
+                cnl = "2"
+            }
+
+            let duracao;
+            duracao = $("select#duracao").children("option:selected").val();
+            if (duracao == "1 hora") {
+                duracao = "1"
+            }
+            if (duracao == "2 horas") {
+                duracao = "2"
+            }
+            let valor;
+            if(cnl == "1"){
+                valor = 100*parseInt(duracao);
+
+            }if(cnl == "2"){
+                valor = 80*parseInt(duracao);
+                
+            }
+            $("#valor").text("Valor da aula: " +valor+" Antcoins");
+        }
 
         function fazerLogoff() {
             localStorage.clear();
@@ -182,7 +211,7 @@
                 cnl = "1"
             }
             if (cnl == "EAD") {
-                cnl = "1"
+                cnl = "2"
             }
 
             let duracao;
@@ -193,7 +222,6 @@
             if (duracao == "2 horas") {
                 duracao = "2"
             }
-
 
             let curso;
             curso = $("select#curso").children("option:selected").val();
