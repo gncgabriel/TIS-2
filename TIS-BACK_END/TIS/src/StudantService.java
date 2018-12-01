@@ -82,6 +82,13 @@ public class StudantService {
 		}
 		return studant.consultarUsuario(email, senha).toJson().toString();
 	}
+	public String virarMonitor(Request request) {
+		Query query = request.getQuery();
+		int id = Integer.parseInt((String) query.get("ID"));
+		String retorno = studant.virarMonitor(id);
+		a.gravarEmArquivo(studant, endereco);
+		return retorno;
+	}
 
 	public String criarAulas(Request request) {
 		Query query = request.getQuery();

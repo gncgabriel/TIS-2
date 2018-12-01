@@ -178,14 +178,12 @@ public class Usuario implements JsonFormatter, Serializable{
 	public String getAulasDadas() {
 		JSONArray array = new JSONArray();
 		for(Aula b : aulasDadas) {
-			array.put(b);
+			array.put(b.toJson());
 		}
 		return array.toString();
 	}
 
 	public void darAula(Aula aula) {
-		aula.setMonitorDaAula(this.nome);
-		aula.setStatus(1);
 		aulasDadas.add(aula);
 	}
 

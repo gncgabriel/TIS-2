@@ -29,6 +29,11 @@ public class StudantConexao implements Container {
 				mensagem = stdService.criarConta(request);
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
+			else if (path.startsWith("/virarMonitor") && "POST".equals(method)) {
+				mensagem = stdService.virarMonitor(request);
+				this.enviaResposta(Status.OK, response, mensagem);
+			}
+			
 			else if (path.startsWith("/criarAula") && "POST".equals(method)) {
 				mensagem = stdService.criarAulas(request);
 				this.enviaResposta(Status.OK, response, mensagem);

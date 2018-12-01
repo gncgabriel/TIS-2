@@ -214,6 +214,8 @@ public class Studant implements JsonFormatter, Serializable {
 	public String darAula(int idMonitor, int idAula) {
 		for (Aula a : aulas) {
 			if (a.getId() == idAula) {
+				a.setMonitorDaAula(this.getUsuario(idMonitor).getNome());
+				a.setStatus(1);
 				getUsuario(idMonitor).darAula(a);
 				return a.toJson().toString();
 			}
