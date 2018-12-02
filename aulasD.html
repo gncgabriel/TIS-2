@@ -8,16 +8,21 @@
 </head>
 <style>
     body{
-        background-color: lightgreen;
+        background-color: rgb(255, 255, 255);
+        
     }
     .aside{
       
-        background-color: white;
+        background-color: lightgreen;
         min-height: 300px;
+        padding: 15px 10px 25px 10px;
+        border-radius: 15px ;
     }
     .main{
-        background-color: transparent;
-        min-height: 300px;
+        background-color: lightgreen;
+        min-height: 230px;
+        padding: 15px 10px 25px 10px;
+        border-radius: 15px;
     }
     #h-solicite{
         font-size: 27pt;
@@ -39,7 +44,7 @@
     
 </style>
 
-<body class="container col-12" onload="GetIt('http://127.0.0.1:7800')">
+<body class="container col-12" onload="GetIt('http://127.0.0.1:7800'); meusCursos('http://127.0.0.1:7800')">
     <div class="row">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top col-12">
             <a class="navbar-brand" href="#">
@@ -66,13 +71,25 @@
             </div>
         </nav>
     </div>
-    <div class="row" style="padding-top:59px !important;">
+    <div class="row" style="margin-top: 60px; padding: 15px;">
+        <aside class="col-md-12 main" style="padding:20px;">
+            <h4 class="text-center">Cursos</h4>
+            <div class="row col-4 d-inline-block float-left" style="border-right:1px solid black; min-height: 130px;">
+                <h6>Adicione Cursos</h6>
+                <input id="cursoAdd" class="form-control col-8 d-inline-block" placeholder="Ex: Algoritimos">
+                <button onclick="addCurso('http://127.0.0.1:7800')" class="btn btn-primary">Adicionar</button>
+            </div>
+            <div id="divCursos" class="col-7 d-inline-block" style="margin-left:20px;">
+                <h6>Seus Cursos</h6>
+
+            </div>
+        </aside>
         <main class="col-md-12 main" style=" margin-top: 10px;">
             <h4 class="text-center" style="margin-top:10px;">Aulas Aguardando Monitor</h4>
             <div class="col-12">
                 <p> </p>
             </div>
-          
+
 
         </main>
     </div>
@@ -93,7 +110,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="$('.modal').removeClass('d-block'); voltar()">Fechar</button>
-                    <button type="button" class="btn btn-primary" onclick="viraMonitor('http://127.0.0.1:7800')">Virar monitor</button>
+                    <button type="button" class="btn btn-primary" onclick="viraMonitor('http://127.0.0.1:7800')">Virar
+                        monitor</button>
                 </div>
             </div>
         </div>
@@ -154,7 +172,7 @@
         function GetIt(url) {
 
             var xmlhttp = FactoryXMLHttpRequest();
-
+            var auxaux = 0;
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4) {
                     // Javascript function JSON.parse to parse JSON data
@@ -162,16 +180,23 @@
 
                         var jsonObj = JSON.parse(xmlhttp.responseText);
                         for (a = 0; a < jsonObj.length; a++) {
-                            if (jsonObj[a].Monitor == "Aguardando Monitor")
-                                $("main").append('<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-warning" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando Monitor</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
+                            if (jsonObj[a].Status == "0") {
+                                auxaux++;
+                                $("main").append('<div class="Mycard text-center" style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-success" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">Lecione esta aula</h5><small>' + jsonObj[a].Curso + '</small><h5 class="card-subtitle mb-2 text-muted">Tema: ' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">' + jsonObj[a].Valor + ' Antcoins</h6><p class="card-text">Clique aqui para ver detalhes</p></div></a></div>')
+                            }
+
+                        }
+                        if (auxaux == 0) {
+                            $("main").append('<h6 class="text-center">Não há aulas esperando por monitores</h6>')
                         }
 
                     } catch (erro) {
                         console.log(erro + "\t Não foi possível ver aulas");
                     }
-                    //   $("main").append(div);
+
                 }
             }
+
 
 
             params = jQuery.param({
@@ -185,24 +210,27 @@
                 xmlhttp.open('post', url + "/getAulasSemMonitor?" + params, true);
                 xmlhttp.send();
             }
+            // meusCursos(url)
+
+
         }
         function viraMonitor(url) {
-          
+
             var xmlhttp = FactoryXMLHttpRequest();
 
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4) {
-                   
+
                     // Jav  ascript function JSON.parse to parse JSON data
                     try {
 
                         var jsonObj = JSON.parse(xmlhttp.responseText);
-                        if(jsonObj.EMonitor == true || jsonObj.EMonitor == 'true'){
-                            localStorage.setItem('EMonitor',jsonObj.EMonitor);
+                        if (jsonObj.EMonitor == true || jsonObj.EMonitor == 'true') {
+                            localStorage.setItem('EMonitor', jsonObj.EMonitor);
                             alert('Você agora é um(a) Monitor(a) do Stud@nt')
                             location.reload();
                         }
-                     
+
 
                     } catch (erro) {
                         console.log(erro + "\t Não foi possível ver aulas");
@@ -221,6 +249,77 @@
                 xmlhttp.open('post', url + "/virarMonitor?" + params2, true);
                 xmlhttp.send();
             }
+        }
+
+        function meusCursos(url) {
+            var xmlhttp = FactoryXMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+
+                    // Jav  ascript function JSON.parse to parse JSON data
+                    try {
+                        $('#divCursos').html('');
+                        $('#divCursos').append('<h6>Seus Cursos</h6>');
+                        var jsonObj4 = JSON.parse(xmlhttp.responseText);
+                        for (c = 0; c < jsonObj4.length; c++) {
+                            $('#divCursos').append('<div class="d-inline-block text-center col-3" style="margin-right:10px;background-color: white; border-radius: 15px; padding: 10px">' + jsonObj4[c].Curso + '</div>')
+                        }
+                    } catch (erro) {
+                        console.log(erro + "\t Não foi possível ver meus cursos");
+                    }
+                    //   $("main").append(div);
+                }
+            }
+            params = jQuery.param({
+                ID: localStorage.getItem('ID')
+            });
+
+            params3 = decodeURIComponent(params)
+
+            if (xmlhttp) {
+                xmlhttp.open('post', url + "/verMeusCursos?" + params3, true);
+                xmlhttp.send();
+            }
+        }
+
+        function addCurso(url) {
+            if ($('#cursoAdd').val() == "") {
+                alert('Digite o curso')
+            } else {
+
+                var xmlhttp = FactoryXMLHttpRequest();
+
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+
+                        // Jav  ascript function JSON.parse to parse JSON data
+                        try {
+
+                            var jsonObj5 = JSON.parse(xmlhttp.responseText);
+                            meusCursos(url);
+                        } catch (erro) {
+                            console.log(erro + "\t Não foi possível ver meus cursos");
+                        }
+                        //   $("main").append(div);
+                    }
+                }
+
+
+
+
+
+                params = jQuery.param({
+                    ID: localStorage.getItem('ID'),
+                    Curso: $('#cursoAdd').val()
+                });
+                params4 = decodeURIComponent(params)
+                if (xmlhttp) {
+                    xmlhttp.open('post', url + "/addCursoAoMonitor?" + params4, true);
+                    xmlhttp.send();
+                }
+            }
+
         }
     </script>
 </body>

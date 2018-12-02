@@ -82,8 +82,8 @@
                     <textarea class="form-control" id="descricao" rows="3" placeholder="Descreva o tema que deseja aprender"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Coloque aqui o seu endereço</label>
-                    <textarea class="form-control" id="local" rows="3" placeholder="Bairro, Rua, Número, Pontos de Referências"></textarea>
+                    <label for="exampleFormControlTextarea1">Coloque aqui o local da aula</label>
+                    <textarea class="form-control" id="local" rows="3" placeholder="Endereço ou Platafoma"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Horário de início</label>
@@ -180,7 +180,7 @@
                     try {
                         var jsonObj = JSON.parse(xmlhttp.responseText);
                         for (a = 0; a < jsonObj.length; a++) {
-                            $("#curso").append('<option>' + jsonObj[a].Categoria + '</option>')
+                            $("#curso").append('<option>' + jsonObj[a].Curso + '</option>')
                         }
                     } catch (erro) {
                         console.log(erro + "\t Não foi possível solicitar aula");

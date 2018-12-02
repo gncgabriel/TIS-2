@@ -8,16 +8,20 @@
 </head>
 <style>
     body{
-        background-color: lightgreen;
+        background-color: rgb(255, 255, 255);
     }
     .aside{
       
-        background-color: white;
+        background-color: lightgreen;
         min-height: 300px;
+        padding: 15px 10px 25px 10px;
+        border-radius: 15px ;
     }
     .main{
-        background-color: transparent;
+        background-color: lightgreen;
         min-height: 230px;
+        padding: 15px 10px 25px 10px;
+        border-radius: 15px;
     }
     #h-solicite{
         font-size: 27pt;
@@ -67,10 +71,10 @@
         </nav>
     </div>
     <div class="row text-center" style="padding: 10px;">
-        <main class="col-md-12 main" style="border-top:1px solid black; border-bottom:1px solid black;margin-top: 70px">
+        <main class="col-md-12 main" style="margin-top: 70px">
             <h3>Aulas Criadas</h3>
         </main>
-        <aside class="col-md-12 main" style="border-top:1px solid black; border-bottom:1px solid black;margin-top: 70px">
+        <aside class="col-md-12 main" style="margin-top: 20px">
             <h3>Aulas à lecionar</h3>
         </aside>
     </div>
@@ -141,6 +145,12 @@
                             if (jsonObj[a].Status == "2" || jsonObj[a].Status == 2) {
                                 $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-danger" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Cancelada</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
                             }
+                            if (jsonObj[a].Status == "3" || jsonObj[a].Status == 3) {
+                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-primary" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Iniciada</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
+                            }
+                            if (jsonObj[a].Status == "4" || jsonObj[a].Status == 4 && jsonObj[a].Nota == 0 || jsonObj[a].Nota == "0") {
+                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-info" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Finalizada</h6><p class="card-text">Clique aqui para fazer a avaliação</p></div></a></div>')
+                            }
 
 
                         }
@@ -168,6 +178,7 @@
 
 
         function aulasDadas(url) {
+            var aux1 = 0;
 
             var xmlhttp = FactoryXMLHttpRequest();
 
@@ -178,20 +189,31 @@
 
                         var jsonObj2 = JSON.parse(xmlhttp.responseText);
                         for (b = 0; b < jsonObj2.length; b++) {
+                            
                             if (jsonObj2[b].Status == "1" || jsonObj2[b].Status == 1) {
-                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-success" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando o inicio da aula</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
+                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-success" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aguardando o inicio da aula</h6><p class="card-text">Clique aqui dar início a aula</p></div></a></div>')
                             }
                             if (jsonObj2[b].Status == "2" || jsonObj2[b].Status == 2) {
                                 $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-danger" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Cancelada</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
                             }
+                            if (jsonObj2[b].Status == "3" || jsonObj2[b].Status == 3) {
+                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-primary" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula iniciada</h6><p class="card-text">Clique aqui para finalizar a aula</p></div></a></div>')
+                            }
+                            if (jsonObj2[b].Status == "4" || jsonObj2[b].Status == 4 && jsonObj2[b].Nota == 0 || jsonObj2[b].Nota == "0") {
+                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-info" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula finalizada</h6><p class="card-text">Clique aqui para avaliar o aluno</p></div></a></div>')
+                            }
+                            aux1 =1;
                         }
 
                     } catch (erro) {
                         console.log(erro + "\t Não foi possível ver aulas Dadas");
                     }
+                    $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-primary" href="aulasD.html" style="text-decoration:none"><div class="card-body"><h5 class="card-title">Dê uma aula agora</h5><h6 class="card-subtitle mb-2 text-muted">Ganhe antcoins dando aulas</h6><p class="card-text">Clique aqui para lecionar nova aula</p></div></a></div>')
 
                 }
+                
             }
+            
 
 
             params = jQuery.param({
@@ -204,6 +226,10 @@
                 xmlhttp.open('post', url + "/aulasDadas?" + params, true);
                 xmlhttp.send();
             }
+
+           
+
+            
         }
 
 

@@ -85,15 +85,44 @@
                 </div>
             </div>
         </div>
+        <div id="divInsereCodigo" class="  d-none row col-12">
+            <div class="card card3 text-white bg-color3 mb-3">
+                <div class="card-body">
+                    <label>Digite abaixo o código informado pelo aluno</label><br>
+                    <input class="input-group" id="areaInsereCodigo" placeholder="Digite o código informado pelo aluno">
+                </div>
+            </div>
+        </div>
+        <div id="divNotasDoAluno" class="d-none row col-12">
+            <div class="card card3 text-white bg-color3 mb-3">
+                <div class="card-body">
+                    <label>Dê uma nota para o aluno</label><br>
+                </div>
+            </div>
+        </div>
+        <div id="divNotasDoMonitor" class="d-none row col-12">
+                <div class="card card3 text-white bg-color3 mb-3">
+                    <div class="card-body">
+                        <label>Dê uma nota para a Aula</label><br>
+                        <label>Dê uma nota para o Monitor</label><br>
+                    </div>
+                </div>
+            </div>
 
 
-        <button id="btnCancelaAula" onclick="cancela('http://127.0.0.1:7800')" class="d-none btn btn-danger col-md-3"
+        <button id="btnCancelaAula" onclick="cancela('http://127.0.0.1:7800')" class="d-none btn btn-warning col-md-3"
             style="margin:10px auto;">Cancelar
             aula</button>
         <button id="btnAceitaAula" onclick="darAula('http://127.0.0.1:7800')" class="btn btn-success col-md-3" style="margin:10px auto;">Aceitar
             aula</button>
+        <button id="btnIniciaAula" class=" d-none btn btn-success col-md-3" style="margin:10px auto;">Iniciar
+            aula</button>
+        <button id="btnFinalizaAula" onclick="finalizarAula('http://127.0.0.1:7800')" class=" d-none btn btn-success col-md-3"
+            style="margin:10px auto;">Finalizar
+            aula</button>
+        <button class="btn col-2 btn-danger" onclick="history.back()">Voltar</button>
 
-        <small id="detalhe" class="d-none"><i>*Só poderá ser cancelada com até 1 hora de antecedencia.</i></small>
+        <small id="detalhe" class="d-none"><i>*A aula não poderá ser cancelada após o monitor aceitar</i></small>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -148,17 +177,25 @@
                 try {
 
                     var jsonObj = JSON.parse(xmlhttp.responseText);
+                    $('#btnIniciaAula').click(function () {
+                        iniciarAula("http://127.0.0.1:7800", jsonObj.Codigo);
+
+                    })
+                    if (jsonObj.Status == "2") {
+                        $('#btnAceitaAula').remove();
+                    }
                     $('#title').text(jsonObj.Descricao)
                     if (jsonObj.Monitor == null) {
                         $('#monitor').text('Aguardando Monitor')
                     } else {
-                        $('#monitor').text(jsonObj.Monitor);
+                        $('#monitor').text("Monitor: " + jsonObj.Monitor);
                     }
 
                     $('#horario').text("Hora de inicio " + jsonObj.Hora_Inicio)
                     $('#duracao').text('Duração : ' + jsonObj.Duracao + ' Hora(s)')
                     $('#local').text(jsonObj.Local)
                     $('#valor').text('Valor : ' + jsonObj.Valor + ' AntCoins')
+
                     if (localStorage.getItem("Nome") == jsonObj.Aluno) {
                         $('#Aluno').remove()
                         $('#btnAceitaAula').addClass('d-none')
@@ -169,6 +206,50 @@
 
                     } else {
                         $('#Aluno').text("Aluno(a): " + jsonObj.Aluno)
+                    }
+
+
+                    if (jsonObj.Status == "1") {
+                        $('#btnAceitaAula').remove();
+                        $('#btnCancelaAula').remove();
+                        $('#detalhe').remove();
+                        if (jsonObj.Aluno == localStorage.getItem('Nome')) {
+
+
+                        }
+                        if (jsonObj.Monitor == localStorage.getItem('Nome')) {
+
+                            $('#divInsereCodigo').removeClass('d-none');
+                            $('#btnIniciaAula').removeClass('d-none');
+
+                        }
+                    }
+                    if (jsonObj.Status == "3") {
+                        $('#btnAceitaAula').remove();
+                        $('#btnCancelaAula').remove();
+                        $('#detalhe').remove();
+                        if (jsonObj.Aluno == localStorage.getItem('Nome')) {
+                            $('#divCodigo').addClass('d-none')
+                        }
+                        if (jsonObj.Monitor == localStorage.getItem('Nome')) {
+
+                            $('#btnFinalizaAula').removeClass('d-none');
+
+                        }
+                    }
+                    if (jsonObj.Status == "4") {
+                        $('#btnAceitaAula').remove();
+                        $('#btnCancelaAula').remove();
+                        $('#detalhe').remove();
+                        if (jsonObj.Aluno == localStorage.getItem('Nome')) {
+                            $('#divCodigo').addClass('d-none')
+                            $('#divNotasDoMonitor').removeClass('d-none')
+                        }
+                        if (jsonObj.Monitor == localStorage.getItem('Nome')) {
+                            $('#divNotasDoAluno').removeClass('d-none')
+                            
+
+                        }
                     }
 
                 } catch (erro) {
@@ -188,6 +269,7 @@
             xmlhttp.open('post', url + "/verAula?" + params, true);
             xmlhttp.send();
         }
+
     }
     function cancela(url) {
 
@@ -235,8 +317,9 @@
                 try {
 
                     var jsonObj = JSON.parse(xmlhttp.responseText);
-                    if(jsonObj.Monitor == localStorage.getItem('Nome')){
+                    if (jsonObj.Monitor == localStorage.getItem('Nome')) {
                         alert("Você é o monitor da aula")
+                        location.reload();
                     }
 
                 } catch (erro) {
@@ -262,6 +345,74 @@
         }
 
     }
+
+    function iniciarAula(url, codigo) {
+        if (codigo == $('#areaInsereCodigo').val()) {
+
+
+
+            var xmlhttp = FactoryXMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    // Javascript function JSON.parse to parse JSON data
+                    try {
+
+                        var jsonObj = JSON.parse(xmlhttp.responseText);
+                        if (jsonObj.Monitor == localStorage.getItem('Nome')) {
+                            location.reload();
+                        }
+
+                    } catch (erro) {
+                        console.log(erro + "\t Não foi dar essa cancelar essa aula");
+                    }
+                }
+            }
+
+
+
+
+
+            params = jQuery.param({
+                IdAula: id,
+                CodigoAula: $('#areaInsereCodigo').val()
+            });
+
+            params = decodeURIComponent(params)
+
+            if (xmlhttp) {
+                xmlhttp.open('post', url + "/iniciarAula?" + params, true);
+                xmlhttp.send();
+            }
+        } else {
+            alert('Código incorreto')
+        }
+
+    }
+
+    function finalizarAula(url) {
+        var xmlhttp = FactoryXMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                // Javascript function JSON.parse to parse JSON data
+                location.reload();
+            }
+        }
+
+        params = jQuery.param({
+            IdAula: id,
+        });
+
+        params5 = decodeURIComponent(params)
+
+        if (xmlhttp) {
+            xmlhttp.open('post', url + "/finalizarAula?" + params5, true);
+            xmlhttp.send();
+        }
+    }
+
+
 </script>
 
 </html>
