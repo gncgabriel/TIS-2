@@ -148,8 +148,13 @@
                             if (jsonObj[a].Status == "3" || jsonObj[a].Status == 3) {
                                 $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-primary" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Iniciada</h6><p class="card-text">Clique aqui para mais informações</p></div></a></div>')
                             }
-                            if (jsonObj[a].Status == "4" || jsonObj[a].Status == 4 && jsonObj[a].Nota == 0 || jsonObj[a].Nota == "0") {
-                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-info" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Finalizada</h6><p class="card-text">Clique aqui para fazer a avaliação</p></div></a></div>')
+                            if (jsonObj[a].Status == "4" && jsonObj[a].NotaMonitor == "0") {
+                                
+                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-info" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Finalizada</h6><p class="card-text text-danger">Clique aqui para fazer a avaliação</p></div></a></div>')
+                            }
+                            if (jsonObj[a].Status == "4" && jsonObj[a].NotaMonitor != "0") {
+                          
+                                $("main").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-info" href="perfilDeAula.html?id=' + jsonObj[a].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj[a].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula Finalizada</h6><p class="card-text">Clique aqui para ver os detalhes da aula</p></div></a></div>')
                             }
 
 
@@ -199,8 +204,12 @@
                             if (jsonObj2[b].Status == "3" || jsonObj2[b].Status == 3) {
                                 $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-primary" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula iniciada</h6><p class="card-text">Clique aqui para finalizar a aula</p></div></a></div>')
                             }
-                            if (jsonObj2[b].Status == "4" || jsonObj2[b].Status == 4 && jsonObj2[b].Nota == 0 || jsonObj2[b].Nota == "0") {
-                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-info" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula finalizada</h6><p class="card-text">Clique aqui para avaliar o aluno</p></div></a></div>')
+                            if (jsonObj2[b].Status == "4" && jsonObj2[b].NotaAluno == "0") {
+                                
+                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-info" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula finalizada</h6><p class="card-text text-danger">Clique aqui para avaliar o aluno</p></div></a></div>')
+                            }
+                            if (jsonObj2[b].Status == "4"  && jsonObj2[b].NotaAluno != "0") {
+                                $("aside").append('<div class="Mycard text-center " style="width: 290px; margin: 10px auto; display: inline-block;"><a class="aulas text-info" href="perfilDeAula.html?id=' + jsonObj2[b].ID + '" style="text-decoration:none"><div class="card-body"><h5 class="card-title">' + jsonObj2[b].Descricao + '</h5><h6 class="card-subtitle mb-2 text-muted">Aula finalizada</h6><p class="card-text">Clique aqui para ver os detalhes da aula</p></div></a></div>')
                             }
                             aux1 =1;
                         }

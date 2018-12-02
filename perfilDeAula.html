@@ -96,18 +96,70 @@
         <div id="divNotasDoAluno" class="d-none row col-12">
             <div class="card card3 text-white bg-color3 mb-3">
                 <div class="card-body">
-                    <label>Dê uma nota para o aluno</label><br>
+                    <div class="d-inline-block col-8">
+                        <div class="input-group-append">
+                            <label>Dê uma nota para o comportamento do aluno</label>
+                        </div>
+
+                        <select onchange="auxSelecaoNotaAluno()" class="custom-select col-7" id="notaAluno">
+                            <option value="0">Nota</option>
+                            <option value="1">1 (Péssimo)</option>
+                            <option value="2">2 (Ruim)</option>
+                            <option value="3">3 (Razoável)</option>
+                            <option value="4">4 (Bom)</option>
+                            <option value="5">5 (Excelente)</option>
+                        </select>
+                    </div>
+                    <br>
+                    <br>
+                    <button id="monitorAvaliando" class="btn btn-success">Avaliar</button>
                 </div>
             </div>
         </div>
+        <div id="divNotasDoAlunoFinal" class="d-none col-12 card text-white bg-color3 mb-3" style="padding:10px">
+            <h6 id="notaAlu"></h6>
+        </div>
         <div id="divNotasDoMonitor" class="d-none row col-12">
-                <div class="card card3 text-white bg-color3 mb-3">
-                    <div class="card-body">
-                        <label>Dê uma nota para a Aula</label><br>
-                        <label>Dê uma nota para o Monitor</label><br>
+            <div class="card card3 text-white bg-color3 mb-3">
+                <div class="card-body">
+                    <div class="d-inline-block col-5">
+                        <div class="input-group-append">
+                            <label>Dê uma nota para a Aula</label>
+                        </div>
+                        <div class="input-group">
+                            <select onchange="auxSelecaoNotaAula()" class="custom-select col-12" id="notaAula">
+                                <option value="0">Nota da aula</option>
+                                <option value="1">1 (Péssimo)</option>
+                                <option value="2">2 (Ruim)</option>
+                                <option value="3">3 (Razoável)</option>
+                                <option value="4">4 (Bom)</option>
+                                <option value="5">5 (Excelente)</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="d-inline-block col-5">
+                        <div class="input-group-append">
+                            <label>Dê uma nota para o Monitor</label>
+                        </div>
+                        <div class="input-group">
+                            <select onchange="auxSelecaoNotaMonitor()" class="custom-select col-12" id="notaMonitor">
+                                <option value="0">Nota do monitor</option>
+                                <option value="1">1 (Péssimo)</option>
+                                <option value="2">2 (Ruim)</option>
+                                <option value="3">3 (Razoável)</option>
+                                <option value="4">4 (Bom)</option>
+                                <option value="5">5 (Excelente)</option>
+                            </select>
+                        </div>
+                    </div><br>
+                    <button id="alunoAvaliando" class="btn btn-success" style="margin-top:15px">Avaliar</button>
                 </div>
             </div>
+        </div>
+        <div id="divNotasDoMonitorFinal" class="d-none col-12 card text-white bg-color3 mb-3 " style="padding:10px;">
+            <h6 id="notaM"></h6>
+            <h6 id="notaAu"></h6>
+        </div>
 
 
         <button id="btnCancelaAula" onclick="cancela('http://127.0.0.1:7800')" class="d-none btn btn-warning col-md-3"
@@ -120,7 +172,7 @@
         <button id="btnFinalizaAula" onclick="finalizarAula('http://127.0.0.1:7800')" class=" d-none btn btn-success col-md-3"
             style="margin:10px auto;">Finalizar
             aula</button>
-        <button class="btn col-2 btn-danger" onclick="history.back()">Voltar</button>
+        <button class="btn col-2 btn-danger" onclick="back()">Voltar</button>
 
         <small id="detalhe" class="d-none"><i>*A aula não poderá ser cancelada após o monitor aceitar</i></small>
 
@@ -133,6 +185,10 @@
         crossorigin="anonymous"></script>
 </body>
 <script>
+    function back() {
+        window.open('aulasR.html', '_self');
+
+    }
     var id = window.location.search.split('id=')[1];
     function fazerLogoff() {
         localStorage.clear();
@@ -177,6 +233,10 @@
                 try {
 
                     var jsonObj = JSON.parse(xmlhttp.responseText);
+
+
+
+
                     $('#btnIniciaAula').click(function () {
                         iniciarAula("http://127.0.0.1:7800", jsonObj.Codigo);
 
@@ -237,7 +297,7 @@
 
                         }
                     }
-                    if (jsonObj.Status == "4") {
+                    if (jsonObj.Status == "4" && (jsonObj.NotaAluno == "0" || jsonObj.NotaMonitor == "0")) {
                         $('#btnAceitaAula').remove();
                         $('#btnCancelaAula').remove();
                         $('#detalhe').remove();
@@ -247,10 +307,58 @@
                         }
                         if (jsonObj.Monitor == localStorage.getItem('Nome')) {
                             $('#divNotasDoAluno').removeClass('d-none')
-                            
+
 
                         }
                     }
+                    if (jsonObj.Status == "4" && jsonObj.NotaAula != "0" && jsonObj.NotaMonitor != "0") {
+                        $('#divNotasDoMonitor').addClass('d-none')
+                        $('#divNotasDoAluno').addClass('d-none')
+                        $('#btnAceitaAula').remove();
+                        $('#btnCancelaAula').remove();
+                        $('#detalhe').remove();
+                        if (jsonObj.Aluno == localStorage.getItem('Nome')) {
+                            $('#divCodigo').addClass('d-none')
+                            $('#divNotasDoMonitorFinal').removeClass('d-none')
+                            $('#notaM').text("Nota Monitor: " + jsonObj.NotaMonitor)
+                            $('#notaAu').text("Nota Aula: " + jsonObj.NotaAula)
+                        }
+                        if (jsonObj.Monitor == localStorage.getItem('Nome')) {
+                            $('#divNotasDoMonitorFinal').removeClass('d-none')
+                            $('#notaAlu').text(jsonObj.NotaAluno)
+
+                        }
+
+                    }
+                    if (jsonObj.Status == "4" && jsonObj.NotaAluno != "0") {
+                        $('#divNotasDoMonitor').addClass('d-none')
+                        $('#divNotasDoAluno').addClass('d-none')
+                        $('#btnAceitaAula').remove();
+                        $('#btnCancelaAula').remove();
+                        $('#detalhe').remove();
+                        if (jsonObj.Aluno == localStorage.getItem('Nome')) {
+                            $('#divCodigo').addClass('d-none')
+                            $('#divNotasDoMonitorFinal').removeClass('d-none')
+                            $('#notaM').text("Nota Monitor: " + jsonObj.NotaMonitor)
+                            $('#notaAu').text("Nota Aula: " + jsonObj.NotaAula)
+                        }
+                        if (jsonObj.Monitor == localStorage.getItem('Nome')) {
+                            $('#divNotasDoMonitorFinal').addClass('d-none')
+                            $('#divNotasDoAlunoFinal').removeClass('d-none')
+                            $('#notaAlu').text("Nota do Aluno " + jsonObj.NotaAluno)
+
+                        }
+                    } else {
+
+                        if (jsonObj.Monitor == localStorage.getItem('Nome')) {
+                            $('#divNotasDoMonitorFinal').addClass('d-none')
+                            if(jsonObj.Status == "4")
+                            $('#divNotasDoAluno').removeClass('d-none')
+                        }
+                    }
+
+
+
 
                 } catch (erro) {
                     console.log(erro + "\t Não foi possível ver essa aula");
@@ -271,6 +379,24 @@
         }
 
     }
+
+    var n1 = 0
+    var n2 = 0
+    var n3 = 0
+
+    function auxSelecaoNotaAluno() {
+        n1 = $("select#notaAluno").children("option:selected").val();
+
+    }
+    function auxSelecaoNotaMonitor() {
+        n2 = $("select#notaMonitor").children("option:selected").val();
+
+    }
+    function auxSelecaoNotaAula() {
+        n3 = $("select#notaAula").children("option:selected").val();
+
+    }
+
     function cancela(url) {
 
 
@@ -411,6 +537,94 @@
             xmlhttp.send();
         }
     }
+
+    $("#alunoAvaliando").click(function () {
+        //n3 nota da aula n2 nota do monitor
+        if (n2 == 0 || n3 == 0) {
+            alert("Escolha uma nota corretamente")
+        } else {
+            var xmlhttp = FactoryXMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    // Javascript function JSON.parse to parse JSON data
+                    location.reload();
+                }
+            }
+
+
+            params = jQuery.param({
+                ID: id,
+                Nota: n2
+            });
+
+            params6 = decodeURIComponent(params)
+
+            if (xmlhttp) {
+                xmlhttp.open('post', "http://127.0.0.1:7800/addNotaMonitor?" + params6, true);
+                xmlhttp.send();
+            }
+
+
+
+
+
+            var xmlhttp2 = FactoryXMLHttpRequest();
+            xmlhttp2.onreadystatechange = function () {
+                if (xmlhttp2.readyState == 4) {
+                    // Javascript function JSON.parse to parse JSON data
+                    location.reload();
+                }
+            }
+
+
+            params = jQuery.param({
+                ID: id,
+                Nota: n3
+            });
+
+            params7 = decodeURIComponent(params)
+
+            if (xmlhttp2) {
+                xmlhttp2.open('post', "http://127.0.0.1:7800/addNotaAula?" + params7, true);
+                xmlhttp2.send();
+            }
+        }
+    })
+
+    $("#monitorAvaliando").click(function () {
+        //n3 nota da aula n2 nota do monitor
+        if (n1 == 0) {
+            alert("Escolha uma nota corretamente")
+        } else {
+
+
+            var xmlhttp3 = FactoryXMLHttpRequest();
+            xmlhttp3.onreadystatechange = function () {
+                if (xmlhttp3.readyState == 4) {
+                    // Javascript function JSON.parse to parse JSON data
+                    setTimeout(function () {
+                        location.reload();
+                    }, 300)
+
+                }
+            }
+
+
+            params = jQuery.param({
+                ID: id,
+                Nota: n1
+            });
+
+            params8 = decodeURIComponent(params)
+
+            if (xmlhttp3) {
+                xmlhttp3.open('post', "http://127.0.0.1:7800/addNotaAluno?" + params8, true);
+                xmlhttp3.send();
+            }
+        }
+    })
+
+
 
 
 </script>
