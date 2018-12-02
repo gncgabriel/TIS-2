@@ -191,6 +191,11 @@ public class Usuario implements JsonFormatter, Serializable{
 		return id;
 	}
 	public String getCursosMonitor() {
+		if(cursosDoMonitor.isEmpty()) {
+			return null;
+			//return "{\"Mensagem\":\"Nao possui cursos\"}";
+		}
+		
 		JSONArray array = new JSONArray();
 		for(Curso c : cursosDoMonitor) {
 			array.put(c.toJson());

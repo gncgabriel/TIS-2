@@ -70,6 +70,10 @@ public class StudantConexao implements Container {
 				mensagem = stdService.getCursos();
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
+			else if (path.startsWith("/verMeusCursos") && "POST".equals(method)) {
+				mensagem = stdService.getMyCursos(request);
+				this.enviaResposta(Status.OK, response, mensagem);
+			}
 			else if (path.startsWith("/getCoins") && "POST".equals(method)) {
 				mensagem = stdService.getCoin(request);
 				this.enviaResposta(Status.OK, response, mensagem);

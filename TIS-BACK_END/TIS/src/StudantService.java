@@ -22,6 +22,7 @@ public class StudantService {
 		studant.addUsuario("Caio", "Ribeiro", "caio@gmail.com", 18, "3178459632", "Minas Gerais", "Belo Horizonte",
 				"Centro", "senha", true);
 		studant.addCursoAoMonitor(studant.getUsuario("caio@gmail.com").getId(), "Matematica");
+		
 		studant.addCursoAoMonitor(studant.getUsuario("jorge@gmail.com").getId(), "Programacao");
 
 		studant.addAula(studant.getUsuario("kah@gmail.com").getId(), "Pampulha, rua portugal, 571", 1, "10/02/2019",
@@ -172,37 +173,46 @@ public class StudantService {
 		Query query = request.getQuery();
 		int id = Integer.parseInt((String) query.get("ID"));
 		int nota = Integer.parseInt((String) query.get("Nota"));
+		String retorno = studant.addNotaAula(id, nota);
 		a.gravarEmArquivo(studant, endereco);
-		return studant.addNotaAula(id, nota);
+		return retorno;
 	}
 
 	public String addNotaAluno(Request request) {
 		Query query = request.getQuery();
 		int id = Integer.parseInt((String) query.get("ID"));
 		int nota = Integer.parseInt((String) query.get("Nota"));
+		String retorno = studant.addNotaAluno(id, nota);
 		a.gravarEmArquivo(studant, endereco);
-		return studant.addNotaAluno(id, nota);
+		return retorno;
 	}
 
 	public String addNotaMonitor(Request request) {
 		Query query = request.getQuery();
 		int id = Integer.parseInt((String) query.get("ID"));
 		int nota = Integer.parseInt((String) query.get("Nota"));
+		String retorno = studant.addNotaMonitor(id, nota);
 		a.gravarEmArquivo(studant, endereco);
-		return studant.addNotaMonitor(id, nota);
+		return retorno;
 	}
 	
 	public String addCursoAoMonitor(Request request){
 		Query query = request.getQuery();
 		int id = Integer.parseInt((String)query.get("ID"));
 		String curso = (String) query.get("Curso");
+		String retorno = studant.addCursoAoMonitor(id, curso);
 		a.gravarEmArquivo(studant, endereco);
-		return studant.addCursoAoMonitor(id, curso);
+		return retorno;
 		
 	}
 
 	public String getCursos() {
 		return studant.verCursos();
+	}
+	public String getMyCursos(Request request) {
+		Query query = request.getQuery();
+		int id = Integer.parseInt((String) query.get("ID"));
+		return studant.getMyCursos(id);
 	}
 
 	public String addCoin(Request request) {

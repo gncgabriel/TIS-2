@@ -299,6 +299,9 @@ public class Studant implements JsonFormatter, Serializable {
 		}
 		return null;
 	}
+	public String getMyCursos(int id) {
+		return this.getUsuario(id).getCursosMonitor();
+	}
 
 	public String addCursoAoMonitor(int idMonitor, String c) {
 		if (this.getCurso(c) == null) {

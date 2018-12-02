@@ -177,7 +177,7 @@ public class Aula implements Serializable{
 		return "Id :"+id+" Monitor da aula: "+monitorDaAula+" Aluno da aula: "+alunoDaAula
 				+" Local da aula: "+local+" Canal: "+canal+" Data: "+data+"Descricao: "+descricao+ "Duracao: "+duracao
 				+" valor: "+valor+" Horario Inicio: "+horaInicio+" Horario Fim :"+horaFim
-				+" Codigo da aula: "+codigo+" Status: "+status+"NotaAluno :"+notaAluno+"NotaAula :"+notaAula+"NotaMonitor: "+notaMonitor; 
+				+" Codigo da aula: "+codigo+" Status: "+status+"NotaAluno :"+notaAluno+"NotaAula :"+notaAula+"NotaMonitor: "+notaMonitor+"Curso :"+curso; 
 	}
 	
 	public JSONObject toJson() {
@@ -187,6 +187,7 @@ public class Aula implements Serializable{
 		obj.put("Aluno", alunoDaAula);
 		obj.put("Local", local);
 		obj.put("Canal", canal);
+		obj.put("Curso", curso);
 		obj.put("Data", data);
 		obj.put("Descricao", descricao);
 		obj.put("Duracao", duracao);

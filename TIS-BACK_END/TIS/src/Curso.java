@@ -24,12 +24,12 @@ public class Curso implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Categoria :"+categoria;
+		return "Curso: "+categoria;
 	}
 	
 	public JSONObject toJson() {
 		JSONObject obj = new JSONObject();
-		obj.put("Categoria", categoria);
+		obj.put("Curso", categoria);
 
 		return obj;
 	}
