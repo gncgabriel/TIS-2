@@ -83,6 +83,7 @@ public class StudantConexao implements Container {
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
 			else if (path.startsWith("/addNotaAula") && "POST".equals(method)) {
+				
 				mensagem = stdService.addNotaAula(request);
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
@@ -91,10 +92,12 @@ public class StudantConexao implements Container {
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
 			else if (path.startsWith("/addNotaMonitor") && "POST".equals(method)) {
+				
 				mensagem = stdService.addNotaMonitor(request);
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
 			else if (path.startsWith("/addCursoAoMonitor") && "POST".equals(method)) {
+				
 				mensagem = stdService.addCursoAoMonitor(request);
 				this.enviaResposta(Status.OK, response, mensagem);
 			}
